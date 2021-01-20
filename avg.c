@@ -1,69 +1,106 @@
 #include <stdio.h>
 
-void disp(int *ptr, int count)
+//#define my_sizeof(type) (char *)(&type + 1) - (char *)(&type)
+#define my_sizeof(type) (char *)(&type + 1) - (char *)(&type)
+#define concat(a, b) a##b
+#define MAX(i, j) (((i) > (j)) ? i : j)
+
+enum week
 {
-    int i = 0;
-    for (i = 0; i < count; i++)
-    {
-        printf(" [%u] ", *ptr);
-        ptr++;
-    }
-    printf("\n\n");
+    Mon,
+    Tue,
+    Wed,
+    Thur,
+    Fri,
+    Sat,
+    Sun
+};
+
+int test()
+{
+    int a = 10;
+    return a >= 0 ? 999 : 888;
 }
 
-double getAverage(int x[], int count)
+int main(int argc, char *argv[])
 {
-    int i = 0;
-    double j;
-    for (i = 0; i < count; i++)
-    {
-        j += x[i];
-    }
-    return (j / count);
-}
+    enum week day;
+    bool boolx = true;
+    int x = 10;
+    char *ptr;
+    day = Mon;
+    int xy = 30;
 
-double getAverage1(int x[5], int count)
-{
-    int i = 0;
-    double j;
-    for (i = 0; i < count; i++)
-    {
-        j += x[i];
-    }
-    return (j / count);
-}
+    printf("conditioanl operator  %d \n", test());
+    printf("default enum value %d\n", day);
+    printf("default bool value %d\n", boolx);
+    printf("size of int %lu\n", sizeof(int));
+    printf("size of long %lu\n", sizeof(long));
+    printf("size of double %lu\n", sizeof(double));
+    printf("size of long long %lu\n", sizeof(long long));
+    printf("size of enum %lu\n", sizeof(day));
+    printf("size of ptr %lu\n", sizeof(ptr));
+    printf("size of *ptr %lu\n", sizeof(*ptr));
+    printf("%d %d %d \n", x++, x++, x++);
+    printf("%d %d  %d \n", ++x, ++x, ++x);
+    //printf("%c", *argv[1]);  - seg fault
 
-double getAverage2(int *x, int count)
-{
-    int i = 0;
-    double j;
-    for (i = 0; i < count; i++)
-    {
-        j += x[i];
-    }
-    return (j / count);
-}
+    printf("my size of integer is %d \n", my_sizeof(x));
+    printf("%d", concat(x, y));
+    return 0;
 
-int main()
-{
-    /* an int array with 5 elements */
-    int balance[5] = {1000, 2, 3, 17, 50};
-    double avg;
-    int x = sizeof(balance) / sizeof(balance[0]);
-    printf("val =%d \n", x);
-    /* pass pointer to the array as an argument */
-    disp(balance, x);
-    avg = getAverage(balance, x);
-    printf("Average value is: %f  \n", avg);
+    //int a, b;
 
-    disp(balance, x);
-    avg = getAverage1(balance, x);
-    printf("Average value is: %f \n ", avg);
-    disp(balance, x);
+    //a = 250;
+    //b = 25;
 
-    avg = getAverage2(balance, x);
-    printf("Average value is: %f \n", avg);
-    disp(balance, x);
+    //cout << "The maximum is " << MAX(a, b) << endl;
 
     return 0;
 }
+
+typedef struct Point
+{
+    int x;
+    int y;
+} Point;
+
+int xmain()
+{
+    Point p1;
+    p1.x = 1;
+    p1.y = 3;
+    printf("%d \n", p1.x);
+    printf("%d \n", p1.y);
+    return 0;
+}
+
+#if 0
+
+har *c[] = {"Mahesh", "Ganesh", "999", "333"};
+char *a;
+char **cp[] = {c+3, c+2, c+1, c};
+char ***cpp = cp;
+    
+int main(void) {
+    printf("%u %u %u %u %u %u \n",sizeof(a),sizeof(*a),sizeof(c),sizeof(cp),sizeof(cpp),sizeof(char),sizeof(char*));
+    return 0;
+}   
+
+void reverse(NODE **temp)                                                                                                                             
+{
+
+    NODE *q, *r, *s;
+    q = *temp;
+    r = NULL;
+    while (q)
+    {   
+        s = r;
+        r = q; 
+        q = q->next;
+        r->next = s;
+    }
+    *temp = r;
+}
+
+#endif

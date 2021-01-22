@@ -1,20 +1,23 @@
 #include <stdio.h>
 
-void disp(int *ptr) {
- while(*ptr){
-	 printf(" [%u] ",*ptr);
-	 ptr++;
- }
- printf("\n\n");
-}	
+#if 0
+#include <iostream>
+#include <algorithm>
+#endif
 
-double getAverage(int x[],int count)
+void disp(int *ptr, int count)
 {
-	int i=0;double j;
-	for(i=0;i<count;i++){
-		j += x[i];
+    int i = 0;
+    //sort(ptr, ptr + count);
+    //std::unique(ptr, ptr + count);
+    //sort(ptr, ptr + count, greater<int>()); // reverse
+
+    for (i = 0; i < count; i++)
+    {
+        printf(" [%u] ", *ptr);
+        ptr++;
     }
-	return(j/count);
+    printf("\n\n");
 }
 
 double getAverage1(int x[5],int count)
@@ -55,6 +58,7 @@ int main ()
   
    avg = getAverage2( balance, x ) ;
    printf( "Average value is: %f \n", avg );
+   disp(balance, x);
    disp(balance);
     
    return 0;

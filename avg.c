@@ -9,8 +9,8 @@ void disp(int *ptr, int count)
 {
     int i = 0;
     //sort(ptr, ptr + count);
-    //std::unique(ptr, ptr + count);
-    //sort(ptr, ptr + count, greater<int>()); // reverse
+    //std::unique(ptr, ptr + count);  // remove duplicate,c++ library
+    //sort(ptr, ptr + count, greater<int>()); // reverse,c++ library
 
     for (i = 0; i < count; i++)
     {

@@ -26,11 +26,11 @@ int main(int argc, char *argv[])
     enum week day;
     int x = 10;
     char *ptr;
-    double x;
     day = Mon;
     int xy = 30; 
-    
-    printf("%d %d\n", day, test());
+    printf("my_size %d \n", my_sizeof(x));
+    printf("my concat %d", concat(x, y)); 
+    printf("day = %d ternary = %d\n", day, test());
     printf("int %lu\n", sizeof(int));
     printf("long %lu\n", sizeof(long));
     printf("double %lu\n", sizeof(double));
@@ -42,8 +42,6 @@ int main(int argc, char *argv[])
     printf("%d %d  %d \n", ++x, ++x, ++x);
     //printf("%c", *argv[1]);  - seg fault
 
-    printf("%d \n", my_sizeof(x));
-    printf("%d", concat(x, y)); 
     return 0; 
 
     //int a, b; 

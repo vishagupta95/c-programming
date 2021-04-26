@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#define true 100
-#define false 200
+#define true 1
+#define false 0
 #define bool int
 
 /*
@@ -25,7 +25,7 @@ int mystrcmp(const char *p1, const char *p2)
         s1++;
         s2++;
     }
-    printf("vishal %s %s  %d %d %d  \n", p1, p2, INDEX(*s1), INDEX(*s2), INDEX(*s1) - INDEX(*s2));
+    //printf("mystrcmp word1: %s Index:%d word2 %s index %d  diffrence %d  \n", p1, INDEX(*s1), p2, INDEX(*s2), INDEX(*s1) - INDEX(*s2));
     return INDEX(*s1) - INDEX(*s2);
 }
 
@@ -34,10 +34,8 @@ void makeMap(char *dict)
     for (int i = 0; i < 26; i++)
     {
         map[dict[i] - 'a'] = i;
-        printf("%c - > %d \n ", dict[i],map[dict[i] - 'a']);
     }
-
-    
+}
 
 bool isAlienSorted(char **words, int wordsSize, char *order)
 {
@@ -60,8 +58,8 @@ int test()
     char str2[15];
     int ret;
 
-    strcpy(str1, "abc");
-    strcpy(str2, "ABC");
+    strcpy(str1, "abce");
+    strcpy(str2, "abcd");
 
     printf("strlen of %s is %d size of str1 %d \n ", str1, strlen(str1), sizeof(str1));
 
@@ -86,16 +84,25 @@ int test()
 int main()
 {
     char order[] = "abcdefghijklmnopqrstuvwxyz";
-    char *buff[] = {"wor", "world", "ram"};
+    char *buff[] = {"a", "ab", "d", "f"};
     int ret;
     int wordsSize = sizeof(buff) / sizeof(buff[0]);
-    //test();
-    //return 0;
-    ;
+    // test();
 
-    printf(" NAAM: %d \n", wordsSize);
+    printf(" Word Count: %d \n", wordsSize);
 
     ret = isAlienSorted(buff, wordsSize, order);
-    printf("ret = %d \n", ret);
+
+    if (ret > 0)
+    {
+        printf("words are sorted lexicographicaly \n");
+    }
+    else
+    {
+        printf("words are not sorted lexicographicaly \n");
+    }
+
+  
+
     return 0;
 }

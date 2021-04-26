@@ -19,11 +19,11 @@
  *
  */
 
-void Swap endian (big to little) or (little to big)
+void swap_endian()
 {
-   uint32_t num = 9;
-   uint32_t b0,b1,b2,b3;
-   uint32_t res;
+   unsigned int num = 0X12345678;
+   unsigned int b0 ,b1 ,b2,b3;
+   unsigned int res;
 
    b0 = (num & 0x000000ff) << 24u;
    b1 = (num & 0x0000ff00) << 8u;
@@ -32,7 +32,7 @@ void Swap endian (big to little) or (little to big)
 
    res = b0 | b1 | b2 | b3;
 
-   printf("%" PRIX32 "\n", res);
+   printf("%x \n", res);
 
 }
 
@@ -40,6 +40,8 @@ int main ()
 {
   unsigned int x = 77;
   char *c = (char*) &x;
+
+  swap_endian();
  
   printf ("*c is: %d\n", *c);
   if (*c == 0x22)

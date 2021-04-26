@@ -1,8 +1,7 @@
 #include <stdio.h>
-
-#define my_sizeof(type) (char *)(&type+1) -(char*)(&type) 
-#define concat(a, b) a##b 
-#define MAX(i, j) (((i) > (j)) ? i : j) 
+#define my_sizeof(type) (char *)(&type + 1) - (char *)(&type)
+#define concat(a, b) a##b
+#define MAX(i, j) (((i) > (j)) ? i : j)
 
 enum week
 {
@@ -12,54 +11,63 @@ enum week
     Thur,
     Fri,
     Sat,
-    Sun 
+    Sun
 };
 
-int test() 
+int test_condition()
 {
-   int a = 10; 
-   return a >=0 ? 999 : 888;
+    int a = 10;
+    return a >= 0 ? 999 : 888;
 }
 
-int main(int argc, char *argv[])
+int enum_test()
+{
+    enum week day = Mon;
+    printf("enum_test week day =%d\n",day);
+}
+
+
+int size_test()
 {
     enum week day;
     int x = 10;
     char *ptr;
     day = Mon;
-    int xy = 30; 
+    int xy = 30;
     printf("my_size %d \n", my_sizeof(x));
-    printf("my concat %d", concat(x, y)); 
-    printf("day = %d ternary = %d\n", day, test());
-    printf("int %lu\n", sizeof(int));
-    printf("long %lu\n", sizeof(long));
-    printf("double %lu\n", sizeof(double));
-    printf("long long %lu\n", sizeof(long long));
-    printf("enum %lu\n", sizeof(day));
-    printf("ptr %lu\n", sizeof(ptr));
-    printf("*ptr %lu\n", sizeof(*ptr));
-    printf("%d %d %d \n", x++, x++, x++);
-    printf("%d %d  %d \n", ++x, ++x, ++x);
+    printf("my concat %d", concat(x, y));
+    printf("enum day = %d ternary = %d\n", day, test_condition());
+    printf("size of int %lu\n", sizeof(int));
+    printf("size of long %lu\n", sizeof(long));
+    printf("size of double %lu\n", sizeof(double));
+    printf("size of long long %lu\n", sizeof(long long));
+    printf("size of enum %lu\n", sizeof(day));
+    printf("size of ptr %lu\n", sizeof(ptr));
+    printf("size of *ptr %lu\n", sizeof(*ptr));
+    printf("if x is 10 x++=[%d] x++=[%d] x++=[%d] \n", x++, x++, x++);
+    printf("++x=[%d] ++x=[%d]  ++x=[%d] \n", ++x, ++x, ++x);
     //printf("%c", *argv[1]);  - seg fault
 
-    return 0; 
+    //return 0;
 
-    //int a, b; 
+    //int a, b;
 
-    //a = 250; 
-    //b = 25; 
+    //a = 250;
+    //b = 25;
 
-    //cout << "The maximum is " << MAX(a, b) << endl; 
+    //cout << "The maximum is " << MAX(a, b) << endl;
 
-    return 0; 
-} 
+    return 0;
+}
 
-typedef struct Point{
-  int x;
-  int y;
+typedef struct Point
+{
+    int x;
+    int y;
 } Point;
 
-int xmain() {
+int struck_test()
+{
     Point p1;
     p1.x = 1;
     p1.y = 3;
@@ -68,35 +76,22 @@ int xmain() {
     return 0;
 }
 
-
-#if 0
-
-har *c[] = {"Mahesh", "Ganesh", "999", "333"};
+char *c[] = {"Mahesh", "Ganesh", "999", "333"};
 char *a;
-char **cp[] = {c+3, c+2, c+1, c};
-char ***cpp = cp;
-    
-int main(void) {
-    printf("%u %u %u %u %u %u \n",sizeof(a),sizeof(*a),sizeof(c),sizeof(cp),sizeof(cpp),sizeof(char),sizeof(char*));
-    return 0;
-}   
+char **cp[] = {c + 3, c + 2, c + 1, c};  // size of any array pointer is larger than single pointer
+char ***cpp = cp; // size of any array pointer is larger than single pointer
 
-void reverse(NODE **temp)                                                                                                                             
+int main(void)
 {
+    printf("%u %u %u %u %u %u \n", sizeof(a), sizeof(*a), sizeof(c), sizeof(cp), sizeof(cpp), sizeof(char), sizeof(char *));
+    printf("a is char pointer ,sizeof(a) = [%u] \n ", sizeof(a));
+    printf("a is char pointer ,sizeof(*a) = [%u ]\n ", sizeof(*a));
+    printf("c is array of char pointer with 4 elements ,sizeof(c) is [%u] \n ", sizeof(c)); 
+    printf("cp is array of double char pointer with 4 elements ,sizeof(cp) is [%u] \n ", sizeof(cp)); 
+    printf("cpp is tripple char pointer ,sizeof(cpp) is [%u] \n ", sizeof(cpp)); 
+    printf("sizeof(char *)  is [%u] \n ", sizeof(char *)); 
+    enum_test();  
+    size_test();
+    struck_test();
+}
 
-    NODE *q, *r, *s;
-    q = *temp;
-    r = NULL;
-    while (q)
-    {   
-        s = r;
-        r = q; 
-        q = q->next;
-        r->next = s;
-    }
-    *temp = r;
-}   
-
-
-
-#endif

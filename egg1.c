@@ -48,32 +48,30 @@ int eggDrop(int n, int k)
 
     // Fill rest of the entries in table using optimal substructure
     // property
-    for (i = 2; i <= n; i++)
+    for (i = 2; i <= n; i++)  // floor Count 
     {
-        for (j = 2; j <= k; j++)
+        for (j = 2; j <= k; j++)  // Egg count
         {
             eggFloor[i][j] = INT_MAX;
-//			printf("vishal_init : egg %u  floor %u  trial  %u \n",i,j,eggFloor[i][j]);
             for (x = 1; x <= j; x++)
             {
-			printf("egg %d floor  %d 1 + max(eggFloor[i-1][x-1] =%d , eggFloor[i][j-x]) =%d \n",i-1,x-1,eggFloor[i-1][x-1],eggFloor[i][j-x]);
+		
                 res = 1 + max(eggFloor[i-1][x-1], eggFloor[i][j-x]);
+            	               
                 if (res < eggFloor[i][j])
                     eggFloor[i][j] = res;
-//			printf("vishal final : egg %u  floor %u  trial %u \n",i,j,eggFloor[i][j]);
+		
             }
         }
     }
 
-    // eggFloor[n][k] holds the result
-			printf("vishal final : egg %u  floor %u  trial %u \n",i,j,eggFloor[n][k]);
     return eggFloor[n][k];
 }
 
 /* Driver program to test to pront printDups*/
 int main()
 {
-    int n = 2, k = 100;
+    int n = 3, k = 100;
     printf ("\nMinimum number of trials in worst case with %d eggs and "
              "%d floors is %d \n", n, k, eggDrop(n, k));
     return 0;

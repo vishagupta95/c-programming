@@ -22,8 +22,8 @@ void rearrange_alternate_positions(int arr[], int n)
 int main()
 {
     int n = 7, i;
-    scanf("%d", &n);
-    int arr[n] = {
+   // scanf("%d", &n);
+    int arr[] = {
         9,
         8,
         6,
@@ -31,7 +31,9 @@ int main()
         9,
         -23,
         4,
-    } printf("\nOriginal array : ");
+    };
+
+    printf("\nOriginal array : ");
     for (i = 0; i < n; i++)
     {
         printf("%d ", arr[i]);
@@ -46,4 +48,4 @@ int main()
     printf("\n");
     return 0;
 }
-~
+

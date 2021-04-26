@@ -26,7 +26,8 @@ int findElement(int arr[], int n)
 // Driver code 
 int main() 
 { 
-    int arr[] = { 1, 4, 2, 5 }; 
+    //int arr[] = { 1, 4, 2, 5 }; 
+    int arr[] = { 2, 4, 12, 5 }; 
     int n = sizeof(arr) / sizeof(arr[0]); 
     printf("%d \n", findElement(arr, n)); 
     return 0; 

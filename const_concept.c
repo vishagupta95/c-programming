@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+//
 /* const char *ptr : This is a pointer to a constant character. 
 * There is no difference between const char *p and char const *p
  *as both are pointer to a const char 
@@ -7,6 +8,7 @@
  * change the pointer itself. 
 */
 
+//int mystrcmp(const char *p1, const char *p2) most common
 int ptr_to_const_func(const char *ptr1, char const *ptr2)
 {
     char m1;

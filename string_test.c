@@ -1,67 +1,136 @@
-// C++ program to print words in a sentence
-#include <iostream>
-#include <string>
-#include <string.h>
+#include <stdio.h>
+#include<stdio.h>                                                                                                                                     
+#include<string.h> 
+#define MAX 100 
 
-using namespace std;
+void sortStrings(char arr[][MAX], int n)  
+{ 
+    char temp[MAX]; 
 
-void removeDupWord(string str)
+    // Sorting strings using bubble sort 
+    for (int j=0; j<n-1; j++) 
+    {   
+        for (int i=j+1; i<n; i++) 
+        {   
+            if (strcmp(arr[j], arr[i]) > 0)  
+            {
+                strcpy(temp, arr[j]); 
+                strcpy(arr[j], arr[i]); 
+                strcpy(arr[i], temp); 
+            }   
+        }   
+    }   
+}
+
+int test() 
+{ 
+    char arr[][MAX] = {"GeeksforGeeks","Quiz","Practice","Gblogs","Coding"}; 
+    int n = sizeof(arr)/sizeof(arr[0]); 
+
+    sortStrings(arr, n); 
+
+    printf("Strings in sorted order are : "); 
+    for (int i=0; i<n; i++) 
+        printf("\n String %d is %s", i+1, arr[i]); 
+    return 0; 
+} 
+
+/// definition of my_strlen() function
+// anything before NULL
+
+unsigned int my_strlen(char *p)
 {
-    string word = "";
-    for (auto x : str)
+    unsigned int count = 0;
+
+    while(*p!='\0')
     {
-        if (x == ' ')
-        {
-            cout << word << endl;
-            word = "";
-        }
-        else
-        {
-            word = word + x;
-        }
+        count++;
+        p++;
     }
-    cout << word << endl;
-}
+    return count;
+} 
 
-using namespace std;
-
-void removeDupWord2(char str[])
+char *my_strcat(char *strg1, char *strg2)
 {
-    // Returns first token
-    char *token = strtok(str, " ");
+    char *start = strg1;
 
-    // Keep printing tokens while one of the
-    // delimiters present in str[].
-    while (token != NULL)
+    while(*strg1 != '\0')
     {
-        printf("%s\n", token);
-        token = strtok(NULL, " ");
+        strg1++;
     }
+
+    while(*strg2 != '\0')
+    {
+        *strg1 = *strg2;
+        strg1++;
+        strg2++;
+    }
+
+    *strg1 = '\0';
+    return start;
 }
 
-// Driver code
-int main()
+
+
+int test() 
+{ 
+    char arr[][MAX] = {"GeeksforGeeks","Quiz","Practice","Gblogs","Coding"}; 
+    int n = sizeof(arr)/sizeof(arr[0]); 
+
+    sortStrings(arr, n); 
+
+    printf("Strings in sorted order are : "); 
+    for (int i=0; i<n; i++) 
+        printf("\n String %d is %s", i+1, arr[i]); 
+    return 0;  
+} 
+
+void x_strcpy(char *dest, char *src)
 {
-    string str = "india is best";
-    removeDupWord(str);
-
-    std::string name;
-
-    std::cout << "Please, enter your full name: ";
-    std::getline(std::cin, name);
-    std::cout << "Hello, " << name << "!\n";
-
-    string s1, s2, result;
-
-    cout << "Enter string s1: ";
-    getline (cin, s1);
-
-    cout << "Enter string s2: ";
-    getline (cin, s2);
-
-    result = s1 + s2;
-
-    cout << "Resultant String = "<< result;
-
-    return 0;
+    while (*src)
+        *dest++ = *src++;
+    *dest = '\0';
 }
+
+int x_strcmp(char *dest, char *src)
+{
+    while (*dest == *src)
+    {
+        {
+            if (*dest == '\0')
+                return (0);
+            dest++;
+            src++;
+        }
+        return (*dest - *src);
+    }
+
+}  
+
+void strtok_test ()
+{ 
+  char str[] ="- This, a @ sample string.";
+  char * pch;
+  printf ("Splitting string \"%s\" into tokens:\n",str);
+  pch = strtok (str," , @.-");
+  while (pch != NULL)
+  {
+    printf ("%s\n",pch);
+    pch = strtok (NULL, " ,.-");
+  }
+  return 0;
+}  
+
+void strrchr_test ()
+{
+   const char str[] = "vishal gupta";
+   const char ch = 'g';
+   char *ret;
+    
+   ret = strrchr(str, 'g');
+
+   printf("String after |%c| is - |%s|\n", ch, ret);
+   
+   return(0);
+}
+~            

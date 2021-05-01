@@ -3,9 +3,12 @@
 
 /* C program to demonstrate how to pass array of integer to a function*/
 
-void displayString(char **argv, int argc, char *array, char array2[])
+void displayString(char **argv,char *argt[], int argc, char *array, char array2[])
 {
+
     int i = 0;
+    char *strg1 = array;
+     
  
     printf("\n");
     
@@ -13,6 +16,12 @@ void displayString(char **argv, int argc, char *array, char array2[])
     {
         printf("String [%d] : %s \n", i + 1, argv[i]);
     }
+    
+    for (i = 0; i < argc; i++)
+    {
+        printf("A-String [%d] : %s \n", i + 1, argt[i]);
+    }
+
 
     for (i = 0; i < array[i] != 0; i++)
     {
@@ -23,6 +32,12 @@ void displayString(char **argv, int argc, char *array, char array2[])
     {
         printf("array [%d] : %c\n", i + 1, array[i]);
     }
+
+    // loooping array of characters
+    i = 0;
+    while (*strg1 != '\0')
+       printf(" new array [%d] : %c\n", ++i, *strg1++);
+
 }
 
 int displayString_test()
@@ -31,7 +46,7 @@ int displayString_test()
     char *buff[] = {"aap", "bap", "cat", "dog"};
     int argc = sizeof(buff) / sizeof(buff[0]);
     printf("argc = %d\n ", argc);
-    displayString(buff, argc, array, array);
+    displayString(buff, buff, argc, array, array);
     return 0;
 }
 

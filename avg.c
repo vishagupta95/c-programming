@@ -1,6 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>  // malloc etc
 
+/* coding guideline
+ *
+ * 1.   main and other functions should start with a curly brace on a new  line
+ * 2.   Use 4 space gap after the start of function or while loop on a new  line
+ * 3.   Use  single space before and after every variable  assignment 
+ * 4.   Inside a for loop space immediately after first and second semicolon
+ * 5.   Space after for loop  before bracket 
+ * 6.   Space after while loop  before bracket 
+ */
+
 /* C program to demonstrate how to pass array of integer to a function*/
 
 void displayString(char **argv,char *argt[], int argc, char *array, char array2[])

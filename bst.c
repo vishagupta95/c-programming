@@ -4,11 +4,11 @@
 
 typedef struct node 
 { 
-    int key; 
+    int data; 
     struct node *left, *right; 
 }Node;
 
-/ Returns true if given tree is BST. 
+// Returns true if given tree is BST. 
 bool isBST(Node* root, Node* l=NULL, Node* r=NULL) 
 { 
     // Base condition 
@@ -36,7 +36,7 @@ bool isBST(Node* root, Node* l=NULL, Node* r=NULL)
 struct node *newNode(int item) 
 { 
     struct node *temp = (struct node *)malloc(sizeof(struct node)); 
-    temp->key = item; 
+    temp->data = item; 
     temp->left = temp->right = NULL; 
     return temp; 
 } 
@@ -47,12 +47,12 @@ void inorder(struct node *root)
     if (root != NULL) 
     { 
         inorder(root->left); 
-        printf("%d \n", root->key); 
+        printf("%d \n", root->data); 
         inorder(root->right); 
     } 
 }
 
-void search(NODE *root, int key)
+void search(Node *root, int data)
 {
     if (root == NULL)
     {
@@ -60,23 +60,23 @@ void search(NODE *root, int key)
         return;
     }
 
-    if (key == root->data)
+    if (data == root->data)
     {
         printf("data found \n");
         return;
     }
-    if (key < root->data)
+    if (data < root->data)
     {
-        search(root->left, key);
+        search(root->left, data);
     }
     else
     {
-        search(root->right, key);
+        search(root->right, data);
     }
 }
 
-* returns the total number of tree nodes */
-int tnode_count(struct tnode *p)
+/* returns the total number of tree nodes */
+int tnode_count(struct node *p)
 {   
     if (p == NULL) 
         return 0;
@@ -90,17 +90,17 @@ int tnode_count(struct tnode *p)
 }   
  
 
-/* A utility function to insert a new node with given key in BST */
-struct node* insert(struct node* node, int key) 
+/* A utility function to insert a new node with given data in BST */
+struct node* insert(struct node* node, int data) 
 { 
     /* If the tree is empty, return a new node */
-    if (node == NULL) return newNode(key); 
+    if (node == NULL) return newNode(data); 
 
     /* Otherwise, recur down the tree */
-    if (key < node->key) 
-        node->left = insert(node->left, key); 
-    else if (key > node->key) 
-        node->right = insert(node->right, key); 
+    if (data < node->data) 
+        node->left = insert(node->left, data); 
+    else if (data > node->data) 
+        node->right = insert(node->right, data); 
 
     /* return the (unchanged) node pointer */
     return node; 

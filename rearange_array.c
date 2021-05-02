@@ -29,7 +29,8 @@ void printArray(int arr[], int n)
 // Driver code 
 int main() 
 { 
-    int arr[] = { 1,6,12, 13, 4, 5, 16, 17, 18, 9 }; 
+    int arr[] = { 10,6,12, 13, 4, 5, 16, 17, 18, 9 }; 
+    // pivot is first element 
     int n = sizeof(arr) / sizeof(arr[0]); 
     rearrange(arr, n , 10); 
     printArray(arr, n); 

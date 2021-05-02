@@ -7,8 +7,9 @@
  * 2.   Use 4 space gap after the start of function or while loop on a new  line
  * 3.   Use  single space before and after every variable  assignment 
  * 4.   Inside a for loop space immediately after first and second semicolon
- * 5.   Space after for loop  before bracket 
- * 6.   Space after while loop  before bracket 
+ * 5.   Space after if  before bracket 
+ * 6.   Space after for loop  before bracket 
+ * 7.   Space after while loop  before bracket 
  */
 
 /* C program to demonstrate how to pass array of integer to a function*/

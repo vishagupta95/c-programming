@@ -1,0 +1,91 @@
+Hadoop is a framework that manages big storage in a distributed way and process it 
+parallelly 
+There are three components of Hadoop.
+
+1.  Hadoop Distributed File System (HDFS): a distributed filesystem 
+that stores data on the commodity machines, providing very high aggregate 
+bandwidth across the cluster
+
+2.  Hadoop YARN: a resource-management platform responsible for 
+managing compute resources in clusters and using them for scheduling 
+of users' applications
+
+3.  Hadoop MapReduce: a programming model for large scale data processing
+
+HDFS comprises of 3 important components-
+Name Node , Data Node ,secondary  Name Node. 
+
+HDFS operates on a  Master-Slave architecture model where the Name Node ( high end
+ computer)acts  as the master node for keeping a track of the storage cluster and 
+the data Node (commodity machines) acts as a slave node summing up to the various 
+systems within  a Hadoop cluster.
+
+Name Node is the centerpiece of HDFS. Name Node is also known as the
+Master. Name Node only stores the metadata of HDFS – the directory tree 
+of all files in the file system, and tracks the files across the cluster
+Name Node does not store the actual data or the dataset. The data itself
+is actually stored in the Data Nodes. File data is replicated on multiple data Nodes for 
+reliability and so that localized computation can be executed near the data.
+
+Default replication factor is 3 ,also there is Heartbeat mechanism  Fault tolerance 
+
+Namenode holds the meta data for the HDFS like Namespace information, 
+block information etc. When in use, all this information is stored in main
+memory. But this information also stored in disk for persistence storage.
+Name Node stores information in disk.
+
+Two different files are
+1.  fsimage - Its the snapshot of the filesystem when name node started
+2.  Edit logs - Its the sequence of changes made to the filesystem after name node 
+started
+
+Only in the restart of name node , edit logs are applied to fsimage to get the
+latest snapshot of the file system. But name node restart are rare in production 
+clusters which means edit logs can grow very large for the clusters where
+ name node runs for a long period of time. The following issues we will encounter 
+in this situation.
+
+1.  Editlog become very large , which will be challenging to manage it
+2.  Namenode restart takes long time because lot of changes has to be merged
+3.  In case of crash, we will lost huge amount of metadata since fsimage is very
+ old
+
+Secondary Name node
+It gets the edit logs from the name node in regular intervals and applies to fsimage
+Once it has new fsimage, it copies back to name node
+
+Name node will use this fsimage for the next restart, which will reduce the startup time
+Secondary Name node whole purpose is to have a checkpoint in HDFS. Its just a helper node for namenode.That’s why it also known as checkpoint node inside the community.
+So we now understood all Secondary Name node does puts a checkpoint in filesystem 
+
+Map reduce Is a programming technique where Hugh data is processed in a parallel
+And distributed fashion . maps reduce is used for parallel processing of big data
+Which is stored in hdfs .In map reduce processing is done at he slave nodes and final result
+is sent To the master node
+
+MapReduce is a programming technique can perform distributed and parallel
+ computations using large datasets across a large number of nodes. A MapReduce 
+job usually splits the input datasets and then process each of them independently 
+by the Map tasks in a completely parallel manner. The output is then sorted and 
+input to reduce tasks 
+
+YARN (Yet Another Resource Manager negotiator) is the resource manager which was 
+introduces in Hadoop 2.x. The major process of YARN is taking the job which is submitted to 
+Hadoop and then distributed the job among multiple slave nodes.
+YARN relies on these three main components for all of its functionality. The first 
+component is the Resource Manager (RM), which is the arbitrator of all cluster resources. 
+It has two parts: a pluggable scheduler and an Application Manager that manages user
+ jobs on the cluster.
+
+The second component is the per-node Node Manager (NM), which manages users’ jobs 
+and workflow on a given node. The central Resource Manager and the collection of
+ Node Managers create the unified computational infrastructure of the cluster.
+The third component is the Application Master, a user job life-cycle manager. 
+The Application Master is where the user application resides. Together, these three 
+components provide a very scalable, flexible, and efficient environment to run virtually 
+any type of large-scale data processing jobs.
+
+A container in YARN is where a unit of work happens in the form of task. 
+A job/application is split in tasks and each task gets executed in one container
+ having a specific number of allocated resources.
+

@@ -1,0 +1,74 @@
+In Supervised learning, you train the machine using data which is  well "labeled. .Supervised
+learning model takes direct feedback to check if it is predicting correct output or not.
+
+un Supervised learning mainly deals with the unlabelled data. Unsupervised learning algorithms allow you to 
+perform more complex processing tasks compared to supervised learning. 
+
+
+Regression: This type can be used when the output variable is a real or continuous value. 
+For example, salary based on work experience, or weight based on height, etc.
+
+Classification: 
+To find whether an email received is a spam or ham
+To identify customer segments
+To find if a bank loan is granted
+To identify if a kid will pass or fail in an examination
+  
+
+Decision Tree: find out if a person is fit or not. Based on a series of test conditions,
+
+Random Forest :  A random forest, is making a bunch of decision trees, and consulting 
+all of them at once to make your decision.  Let's say you had to make a big life decision, and you
+ knew it came down to some factors: Health, happiness, finances, philosophy
+And different factors have different importance
+
+Naive Bayes :  assumes that the presence of a particular feature in a class is unrelated to 
+the presence of any other feature. For example, a fruit may be considered to be an
+ apple if it is red, round, and about 3 inches in diameter. aa
+
+Unsupervised learning is where you only have input data and no  corresponding output
+ Variable .The machine works by searching a pattern in the unlabeled data and 
+then responds. The goal of unsupervised learning is to find the hidden patterns and useful 
+insights from the unknown dataset.
+
+Clustering: In clustering, objects are divided into clusters that are similar but are dissimilar to 
+the objects belonging to another cluster. Like, finding out which customers made similar 
+product purchases.
+
+Association: As the name suggests, it discovers the probability of the co-occurrence of items in a
+Collection. 
+
+Neural Nets (NN) are an ML technique. They are layered structures. Their first
+layer is where the inputs are applied. The final layer is where the computed 
+outputs are made available. The layers that reside between the input and output layers are called the hidden (neuron) layers as they are not
+directly connected to the outside world.
+NNs having a single or no hidden layer are called Shallow NNs
+
+A neural net is said to learn supervised, if the desired output is already known.
+While learning, one of the input patterns is given to the net's input layer
+Neural nets that learn unsupervised have no such target outputs. 
+It can't be determined what the result of the learning process will look like.
+
+Training a Neural Network, 
+Lets train our network to predict someonegender given their weight
+ and height:
+3 things are happening here. First, each input is multiplied 
+by a weight
+Next, all the weighted inputs are added together with a bias bb
+Finally, the sum is passed through an activation function:
+
+The activation function is used to turn an unbounded input 
+into an output that has a nice, predictable form. A commonly
+ used activation function is the sigmoid function:
+
+A sigmoid function is a type of activation function, and more specifically defined 
+as a squashing function, which limits the output to a range between 0 and 1.
+
+TensorFlow is a machine learning / deep learning / multilayer neural network 
+library from Google. Libraries using data flow graphs can be used to describe 
+complex networks in an easy-to-understand manner. With high versatility, 
+it can be used from the research level to real products.
+By using this neural network, machines can perform logical thinking and 
+learning similar to humans
+
+

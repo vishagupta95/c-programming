@@ -34,6 +34,7 @@ void reverse_str(char *str)
         str[j] = ch;
     }
 }
+//dd
 
 int main()
 {

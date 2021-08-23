@@ -36,22 +36,43 @@ void swap_endian()
 
 }
 
-int main ()
+#define BIG_ENDIAN      0
+#define LITTLE_ENDIAN   1
+int TestByteOrder()
 {
-  unsigned int x = 77;
-  char *c = (char*) &x;
-
-  swap_endian();
- 
-  printf ("*c is: %d\n", *c);
-  if (*c == 0x22)
-  {
-    printf ("Underlying architecture is little endian. \n");
-  }
-  else
-  {
-     printf ("Underlying architecture is big endian. \n");
-  }
- 
-  return 0;
+   short int word = 0x0001;
+   char *byte = (char *) &word;
+   return(byte[0] ? LITTLE_ENDIAN : BIG_ENDIAN);
 }
+
+/* 
+ *    Function check_for_endianness() returns 1, if architecture 
+ *       is little endian, 0 in case of big endian.
+ *        */
+ 
+int check_for_endianness()
+{
+  unsigned int x = 1;
+  char *c = (char*) &x;
+  return (int)*c;
+}
+
+/* 
+ *   Write a C program to find out if the underlying 
+ *   architecture is little endian or big endian. 
+ *   */
+int main()
+{
+
+  union
+  {
+    int i;
+    char c[sizeof(int)];
+  } x;
+  x.i = 1;
+  if (x.c[0] == 1)
+    printf("little-endian\n");
+  else
+    printf("big-endian\n");
+
+} 

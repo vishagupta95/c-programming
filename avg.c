@@ -10,7 +10,32 @@
  * 5.   Space after if  before bracket 
  * 6.   Space after for loop  before bracket 
  * 7.   Space after while loop  before bracket 
- */
+
+static void
+print_element_names(xmlNode * a_node)
+{
+    xmlNode *cur_node = NULL;
+
+    for (cur_node = a_node; cur_node; cur_node = cur_node->next) {
+        if (cur_node->type == XML_ELEMENT_NODE) {
+            printf("node type: Element, name: %s\n", cur_node->name);
+        }
+
+        print_element_names(cur_node->children);
+    }
+}
+
+int
+main(int argc, char **argv)
+{
+    xmlDoc *doc = NULL;
+    xmlNode *root_element = NULL;
+
+    if (argc != 2)
+        return(1);
+*/
+
+
 
 /* C program to demonstrate how to pass array of integer to a function*/
 

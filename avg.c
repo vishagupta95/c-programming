@@ -23,6 +23,10 @@ print_element_names(xmlNode * a_node)
 
         print_element_names(cur_node->children);
     }
+
+    while (ret == 1) {
+       ret = xmlTextReaderRead(reader);
+    }
 }
 
 int

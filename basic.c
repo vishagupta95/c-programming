@@ -17,7 +17,7 @@ enum week
 int test_condition()
 {
     int a = 10;
-    return a >= 0 ? 999 : 888;
+    return a <= 0 ? 999 : 888;
 }
 
 int enum_test()
@@ -33,10 +33,10 @@ int size_test()
     int x = 10;
     char *ptr;
     day = Mon;
-    int xy = 30;
-    printf("my_size %d \n", my_sizeof(x));
-    printf("my concat %d", concat(x, y));
-    printf("enum day = %d ternary = %d\n", day, test_condition());
+    int xy = 40;
+    printf("size of integer %d \n", my_sizeof(x));
+    printf("concat macro %d", concat(x, y));
+    printf("enum init value  = %d fancy return = %d\n", day, test_condition());
     printf("size of int %lu\n", sizeof(int));
     printf("size of long %lu\n", sizeof(long));
     printf("size of double %lu\n", sizeof(double));

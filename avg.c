@@ -1,7 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>  // malloc etc
 
-/* coding guideline
+/*
+*
+*
+*  NULL pointer is usually defined as:#define NULL (void *)0
+*  ASCII character '0' evaluates to 48 or 0x30.
+* '\0' is defined to be a null character 
+*  \0 is 0
+*  0 is 48
+*  In C language string is nothing but an array of char 1 byte. Each array is terminated with null character of 1 byte 
+*  Integer arrays are not C-style strings, and there is no null-terminator values in them
+*
+*/
+
+
+/* coding Guideline
  *
  * 1.   main and other functions should start with a curly brace on a new  line
  * 2.   Use 4 space gap after the start of function or while loop on a new  line
@@ -50,33 +64,38 @@ void displayString(char **argv,char *argt[], int argc, char *array, char array2[
     char *strg1 = array;
      
  
-    printf("\n");
+    printf("String test  Method 1\n\n");
     
     for (i = 0; i < argc; i++)
     {
         printf("String [%d] : %s \n", i + 1, argv[i]);
     }
     
+    printf("String test  Method 2\n\n");
+    
     for (i = 0; i < argc; i++)
     {
         printf("A-String [%d] : %s \n", i + 1, argt[i]);
     }
 
+    printf("String test  Method 3\n\n");
 
-    for (i = 0; i < array[i] != 0; i++)
+    for (i = 0; i < array[i] != '\0'; i++)
     {
         printf("array [%d] : %c\n", i + 1, array[i]);
     }
 
-    for (i = 0; i < array2[i] != 0; i++)
+    printf("String test  Method 4\n\n");
+    for (i = 0; i < array2[i] != '\0'; i++)
     {
         printf("array [%d] : %c\n", i + 1, array[i]);
     }
 
+    printf("String test  Method 5\n\n");
     // loooping array of characters
     i = 0;
     while (*strg1 != '\0')
-       printf(" new array [%d] : %c\n", ++i, *strg1++);
+       printf("new array [%d] : %c\n", ++i, *strg1++);
 
 }
 
@@ -90,18 +109,8 @@ int displayString_test()
     return 0;
 }
 
-void display(int *argv)
-{
-    int i = 0;
 
-    for (i = 0; i < argv[i] != 0; i++)
-    {
-        printf(" [%u] ", argv[i]);
-    }
-    printf("\n\n");
-}
-
-double getAverage1(int x[], int argc)
+double getIntegerAverage1(int x[], int argc)
 {
     int i = 0;
     double j;
@@ -112,7 +121,7 @@ double getAverage1(int x[], int argc)
     return (j / argc);
 }
 
-double getAverage2(int *x, int argc)
+double getIntegerAverage2(int *x, int argc)
 {
     int i = 0;
     double j;
@@ -129,6 +138,8 @@ int main()
     /* an int array with 5 elements */
     int balance[] = {14, 16, 18, 20, 22};
     double avg;
+    printf("\\0 is %d\n", '\0');
+    printf("0 is %d\n", '0');
 
     displayString_test();
     
@@ -136,20 +147,15 @@ int main()
     printf("sizeof(balance) %d \n", sizeof(balance));
     printf("sizeof(balance[0]) %d \n", sizeof(balance[0]));
     printf("argc =%d \n", argc);
-
     /* pass pointer to the array as an argument */
-    display(balance);
-
-    avg = getAverage1(balance, argc);
+    
+    avg = getIntegerAverage1(balance, argc);
     printf("Average value is: %f  \n", avg);
 
-    display(balance);
-    avg = getAverage1(balance, argc);
+    avg = getIntegerAverage1(balance, argc);
     printf("Average value is: %f \n ", avg);
-    display(balance);
 
-    avg = getAverage2(balance, argc);
+    avg = getIntegerAverage2(balance, argc);
     printf("Average value is: %f \n", avg);
-    display(balance);
     return 0;
 }

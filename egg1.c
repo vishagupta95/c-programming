@@ -1,78 +1,66 @@
-# include <stdio.h>
-# include <limits.h>
+#include<stdio.h>
+
 /*
-When the sum of the series above equals 100, we get x = 13.651, which rounds up to 14. This means 
-that we should start from floor 14 (which is our x) and then move up x-1 (13) floors to floor 27
-if the egg doesn break and then move up x-2 (12) floors to floor 39 and so on if the egg still does not break.
+ * 1) Recursive Approach:
+ *
+ * We have n eggs and k floors. The following are the possibilities,
+ *
+ * When we drop an egg from a floor x, there can be two cases (1) The egg breaks (2) The egg doesn't break.
+ *
+ * If the egg breaks after dropping from xth floor, then we only need to check for floors lower than x with 
+ * remaining eggs; so the problem reduces to x-1 floors and n-1 eggs.
+ * If the egg doesn't break after dropping from the xth floor, then we only need to check for floors higher than x;i
+ * so the problem reduces to k-x floors and n eggs.
+ * Since we need to minimize the number of trials in the worst case, we take the maximum of two cases. 
+ * We consider the max of the above two cases for every floor and choose the floor which yields the minimum number of trials.
+ *
+ *a for 2 eggs and 100 floor
 
-This is the number of drops required as we move up the floors in the building:
- Drop    Floor 
-#1  14
-#2  27
-#3  39
-#4  50
-#5  60
-#6  69
-#7  77
-#8  84
-#9  90
-#10 95
-#11 99
-#12 100
+  if first eggg breaks at 14th floor, start from 1 to 13  = 1+13 =14
+  if first eggg breaks at 27th floor, start from 15 to 26  = 2+12 =14
+  if first eggg breaks at 39th floor, start from 40 to 38  = 3+11 =14
 
-*/
+ *
+ *
+ */
 
-// A utility function to get maximum of two integers
-int max(int a, int b) { return (a > b)? a: b; }
 
-/* Function to get minimum number of trails needed in worst
-  case with n eggs and k floors */
-int eggDrop(int n, int k)
-{
-    /* A 2D table where entery eggFloor[i][j] will represent minimum
-       number of trials needed for i eggs and j floors. */
-    int eggFloor[n+1][k+1];
-    int res;
-    int i, j, x;
+#define MAX_VAL 9999
 
-    // We need one trial for one floor and0 trials for 0 floors
-    for (i = 1; i <= n; i++)
-    {
-        eggFloor[i][1] = 1;
-        eggFloor[i][0] = 0;
-    }
-
-    // We always need j trials for one egg and j floors.
-    for (j = 1; j <= k; j++)
-        eggFloor[1][j] = j;
-
-    // Fill rest of the entries in table using optimal substructure
-    // property
-    for (i = 2; i <= n; i++)  // floor Count 
-    {
-        for (j = 2; j <= k; j++)  // Egg count
-        {
-            eggFloor[i][j] = INT_MAX;
-            for (x = 1; x <= j; x++)
-            {
-		
-                res = 1 + max(eggFloor[i-1][x-1], eggFloor[i][j-x]);
-            	               
-                if (res < eggFloor[i][j])
-                    eggFloor[i][j] = res;
-		
-            }
-        }
-    }
-
-    return eggFloor[n][k];
+int max(int a, int b) {
+   return (a > b)? a: b;
 }
 
-/* Driver program to test to pront printDups*/
-int main()
-{
-    int n = 3, k = 100;
-    printf ("\nMinimum number of trials in worst case with %d eggs and "
-             "%d floors is %d \n", n, k, eggDrop(n, k));
-    return 0;
+int eggTrialCount(int eggs, int floors) { //minimum trials for worst case
+
+   int minTrial[eggs+1][floors+1]; //to store minimum trials for i-th egg and jth floor
+   int res, i, j, k;
+  
+   for (i = 1; i <= eggs; i++) { //one trial to check from first floor, and no trial for 0th floor
+      minTrial[i][1] = 1;
+      minTrial[i][0] = 0;
+   }
+   for (j = 1; j <= floors; j++) //when egg is 1, we need 1 trials for each floor
+      minTrial[1][j] = j;
+
+
+   for (i = 2; i <= eggs; i++){ //for 2 or more than 2 eggs
+      for (j = 2; j <= floors; j++) { //for second or more than second floor
+         minTrial[i][j] = MAX_VAL;
+         for (k = 1; k <= j; k++) {
+            res = 1 + max(minTrial[i-1][k-1], minTrial[i][j-k]);
+            if (res < minTrial[i][j])
+               minTrial[i][j] = res;
+         }
+      }
+   }
+   return minTrial[eggs][floors]; //number of trials for asked egg and floor
+}
+int main () {
+   int egg, maxFloor;
+   printf("Enter number of eggs: ");
+   scanf("%d", &egg);
+   printf("Enter max Floor: ");
+   scanf("%d", &maxFloor);
+   printf("Minimum number of trials: %d", eggTrialCount(egg, maxFloor));
 }

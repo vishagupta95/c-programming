@@ -1,6 +1,13 @@
 // C program to demonstrate insert operation in binary search tree 
 #include<stdio.h> 
 #include<stdlib.h> 
+#include <limits.h>
+
+
+#define false 0
+#define true 1
+typedef int bool;
+
 
 typedef struct node 
 { 
@@ -8,29 +15,22 @@ typedef struct node
     struct node *left, *right; 
 }Node;
 
-// Returns true if given tree is BST. 
-bool isBST(Node* root, Node* l=NULL, Node* r=NULL) 
-{ 
-    // Base condition 
-    if (root == NULL)
+
+bool isBST(Node* node, int min, int max) {
+    // Base case. An empty tree is a BST.
+    if (node == NULL)
         return true;
-    
-    // if left node exist then check it has 
-    // correct data or not i.e. left node's data 
-    // should be less than root's data 
-    if (l != NULL and root->data <= l->data)
+    // Checking if a key is outside the permitted range.
+    if (node -> data < min)
         return false;
-    
-    // if right node exist then check it has 
-    // correct data or not i.e. right node's data 
-    // should be greater than root's data 
-    if (r != NULL and root->data >= r->data)
+  if (node -> data > max)
         return false;
-    
-    // check recursively for every node.  
-    return isBST(root->left, l, root) and
-        isBST(root->right, root, r);
-} 
+    // Sending in updates ranges to the right and left subtree
+    return isBST(node -> right, node -> data, max) &&  
+  isBST(node -> left, min, node -> data);    
+}
+
+
 
 // A utility function to create a new BST node 
 struct node *newNode(int item) 
@@ -126,7 +126,11 @@ int main()
 
     // print inoder traversal of the BST 
     inorder(root); 
-
+    if(isBST(root, INT_MIN, INT_MAX)){
+          printf("This binary tree is a BST.\n");
+    } else {
+          printf("This binary tree is not BST.\n");
+    }
     return 0; 
 } 
 

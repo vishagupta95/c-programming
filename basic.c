@@ -3,6 +3,27 @@
 #define concat(a, b) a##b
 #define MAX(i, j) (((i) > (j)) ? i : j)
 
+
+/*
+ *
+ * strlen: Returns the length of the given byte string not including null terminator;                                                                                           
+ *
+ * char s[]="help";
+ * strlen(s) should return 4.
+ * sizeof: Returns the length of the given byte string, include null terminator;
+ *
+ * char s[]="help";
+ * sizeof(s) should return 5
+ *
+ * strcpy(ptr2, ptr1) is equivalent to while(*ptr2++ = *ptr1++)
+ *
+ * where as strdup is equivalent to
+ *
+ * ptr2 = malloc(strlen(ptr1)+1);
+ * strcpy(ptr2,ptr1);
+ */
+
+
 enum week
 {
     Mon,

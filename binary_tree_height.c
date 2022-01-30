@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/* The height of a binary tree is the largest number of edges in a path from the root node to a leaf node.
-   edge means line joing 2 nodes  , so binary tree with 4 nodes on eitherside will have 3 edges
+/*
+Height of a node is the no of edges we travel between the root node and node , 
+while traveling in top down manner. Height of root node is 0.
 
-   The level of a node is the number of edges along the unique path between it and the root node. 
-   Therefore, the root node has a level of 0. If it has children, both of them have a level of 
+Level of a binary tree start from root node with value 0 . Everytime we move from top side of the tree towards 
+the bottom side we increase the level by one.
+
           10--- > level 0
       20          19   level 1
    5

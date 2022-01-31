@@ -20,6 +20,18 @@
  *
  * ptr2 = malloc(strlen(ptr1)+1);
  * strcpy(ptr2,ptr1);
+int main()
+{
+    char source[] = "GeeksForGeeks";
+
+    // A copy of source is created dynamically
+    // and pointer to copy is returned.
+    char* target = strdup(source);
+
+    printf("%s", target);
+    return 0;
+}
+
  */
 
 

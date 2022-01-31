@@ -2,6 +2,34 @@
 #include <string.h>
 #include <stdlib.h>
 
+/*
+
+// CPP program to illustrate strstr()
+#include <string.h>
+#include <stdio.h>
+
+int main()
+{
+    // Take any two strings
+    char s1[] = "Fun with STL";
+    char s2[] = "STL";
+    char* p;
+
+    // Find first occurrence of s2 in s1
+    p = strstr(s1, s2);
+
+    // Prints the result
+    if (p) {
+        strcpy(p, "Strings");
+        printf("%s", s1);
+    } else
+        printf("String not found\n");
+
+    return 0;
+}
+
+*/
+
 char *solution(char *A[], char *B[], int N, char *P)
 {
     static char array[1024] ={};

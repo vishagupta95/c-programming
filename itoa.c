@@ -2,6 +2,12 @@
 #include <string.h>
 #include <math.h>
 
+/*
+'0' refers to the character zero, which has an ASCII value of 48. 
+'\0' refers to the null character (ASCII value 0)
+
+*/
+
 void reverse_str(char *s, int len) {
     int i, j;
     char c;

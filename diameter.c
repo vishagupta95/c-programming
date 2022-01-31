@@ -9,6 +9,8 @@ Recursively calculate the diameter of left and right subtree. Let it be leftDiam
 Return maximum of leftDiameter, rightDiameter and leftHeight + rightHeight + 1.
 Time Complexity : O(n2)
 
+. A binary tree diameter equals the total number of nodes on the longest path between any two leaves in it
+
 */
 
 #include <stdio.h>

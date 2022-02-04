@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* Height of empty tree is -1, height of tree with one node is 0 and height of below tree is 2. */
+
 /* A binary tree node has data,
 pointer to left child
 and a pointer to right child */
@@ -20,7 +22,7 @@ void printLevelOrder(struct node* root)
 {
     int h = height(root);
     int i;
-    for (i=1; i<=h; i++)
+    for (i=0; i<h; i++)
         printCurrentLevel(root, i);
 }
 
@@ -29,9 +31,9 @@ void printCurrentLevel(struct node* root, int level)
 {
     if (root == NULL)
         return;
-    if (level == 1)
+    if (level == 0)
         printf("%d ", root->data);
-    else if (level > 1)
+    else if (level > 0)
     {
         printCurrentLevel(root->left, level-1);
         printCurrentLevel(root->right, level-1);
@@ -44,7 +46,7 @@ void printCurrentLevel(struct node* root, int level)
 int height(struct node* node)
 {
     if (node==NULL)
-        return 0;
+        return -1;
     else
     {
         /* compute the height of each subtree */

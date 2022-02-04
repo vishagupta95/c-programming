@@ -39,10 +39,18 @@ void reverse_str(char *s, int len) {
 
 char* my_itoa_new(int n, char *s) {
     int i = 0, sign = n;
+    
+    /* A zero is same "0" string in all base */
+    if (n == 0) {
+        s[i] = '0';
+        s[i + 1] = '\0';
+        return s;
+    }
 
-    do {
+    while (n != 0) {
         s[i++] = abs(n % 10) + '0';
-    } while ((n /= 10) != 0);
+        n = n/10;
+    }
 
     if (sign < 0)
         s[i++] = '-';
@@ -97,6 +105,7 @@ int main() {
     printf("Enter a number and base\n");
     scanf("%d %d", &i, &b);
      
-    printf("String : %s", my_itoa(i, charArray, b));
+    printf("String : %s \n", my_itoa_new(i, charArray));
+    printf("String : %s \n", my_itoa(i, charArray, b));
     return 0;
 }

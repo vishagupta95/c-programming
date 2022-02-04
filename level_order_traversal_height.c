@@ -22,7 +22,7 @@ void printLevelOrder(struct node* root)
 {
     int h = height(root);
     int i;
-    for (i=0; i<h; i++)
+    for (i=0; i<=h; i++)
         printCurrentLevel(root, i);
 }
 

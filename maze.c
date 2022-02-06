@@ -1,7 +1,5 @@
 #include<stdio.h>
-#define bool int 
-#define true 1
-#define false 0
+#include <stdbool.h>
 // Maze size
 #define N 4 
  

@@ -1,7 +1,8 @@
-nclude <iostream>
+#include <iostream>
 #include <queue>
 #include <vector>
 #include <cstdlib>
+//g++  stack_using_2_queue.cpp -std=c++11    
 using namespace std;
  
 // Implement stack using two queues

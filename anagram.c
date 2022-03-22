@@ -2,6 +2,7 @@
 /* Method 1*/
 
 #include <stdio.h>
+#include <stdbool.h>
 #define NO_OF_CHARS 256
 
 /* function to check whether two strings are anagram of
@@ -50,6 +51,7 @@ int main()
     return 0;
 }
 
+#if 0
 /* Method 2*/
 #include <iostream>
 #include <stdio.h>
@@ -143,3 +145,5 @@ int check_anagram(char a[], char b[])
 
   return 1;
 }
+
+#endif

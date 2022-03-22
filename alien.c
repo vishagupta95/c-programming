@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <string.h>
-
-#define true 1
-#define false 0
-#define bool int
+#include <stdbool.h>
 
 /*
+ *
+ * gcc file.c -std=c99
 leets Code
 In an alien language, surprisingly they also use english lowercase letters, but possibly in a different order. The order of the alphabet 
 is some permutation of lowercase letters.Given a sequence of words written in the alien language, and the order 

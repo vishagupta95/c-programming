@@ -1,8 +1,47 @@
+
 #include <stdio.h>
 #define my_sizeof(type) (char *)(&type + 1) - (char *)(&type)
 #define concat(a, b) a##b
 #define MAX(i, j) (((i) > (j)) ? i : j)
+/*
+ * For me the easiest way was to look at a graph of log2(n), where n
+ * is the number of nodes in the binary tree. As a table this looks like:
 
+          log2(n) = d
+
+          log2(1) = 0
+          log2(2) = 1 
+          log2(4) = 2
+          log2(8) = 3
+
+and then I draw a little binary tree, this one goes from depth d=0 to d=3:
+
+            d=0          O
+                        / \
+            d=1        R   B
+                      /\   /\
+            d=2      R  B R  B
+                    /\ /\ /\ /\
+            d=3    R B RB RB R B
+
+
+void *philosopher(void *params)
+{
+  int i;
+  params_t self = *(params_t *)params;
+
+  for(i = 0; i < 3; i++) {
+    think(self.position);
+
+    sem_wait(self.lock);
+    sem_wait(&self.forks[self.position]);
+    sem_wait(&self.forks[(self.position + 1) % self.count]);
+    eat(self.position);
+    sem_post(&self.forks[self.position]);
+    sem_post(&self.forks[(self.position + 1) % self.count]);
+    sem_post(self.lock);
+  }
+// On 32-bit machine sizeof pointer is 32 bits ( 4 bytes), while on 64 bit machine it's 8 byte
 
 /*
  *
@@ -21,7 +60,36 @@
  *
  * ptr2 = malloc(strlen(ptr1)+1);
  * strcpy(ptr2,ptr1);
- */
+ *
+ *
+ *
+ * #define DUAL_IP_MIN_MTU(x,y,z)       (x)>(y)?((x)>(z)?((y)>(z)?(z):(y)):(y)):((x)>(z)?(z):(x))
+ * Pointer arthmatic
+ * The answers are:
+ * a) int a; // An integer
+ *
+ * b) int *a; // A pointer to an integer
+ *
+ * c) int **a; // A pointer to a pointer to an integer
+ *
+ * d) int a[10]; // An array of 10 integers
+ *
+ * e) int *a[10]; // An array of 10 pointers to integers
+ *
+ * f) int (*a)[10]; // A pointer to an array of 10 integers
+ *
+ * g) int (*a)(int); // A pointer to a function a that takes an integer argument and returns an integer
+ *
+ * h) int (*a[10])(int); // An array of 10 pointers to functions that take an integer
+ * `
+ *
+ *2D pointer declaratrion
+
+ int **array1 = malloc(nrows * sizeof(int *));
+    for(i = 0; i < nrows; i++)
+           array1[i] = malloc(ncolumns * sizeof(int));
+ *
+ * /
 
 
 enum week

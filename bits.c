@@ -8,6 +8,20 @@
 /* little to big endian */
 #define SWAP_INT32(x) (((x) >> 24) | (((x)&0x00FF0000) >> 8) | (((x)&0x0000FF00) << 8) | ((x) << 24))
 
+
+void set_bit_count_old()
+{
+  int n =0xF;
+  int cnt=0;
+  while(n)
+  {
+    if(n & 0x01)cnt++;
+       n>>=1;
+  }
+  printf("\n %u",cnt);
+}
+
+
 void set_bit_count()
 {
 

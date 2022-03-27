@@ -3,13 +3,6 @@
 file descriptor is a integer used to index into a table of files that a process has open.
 socket is a special file used for inter-process communication
 
-IO Multiplexing
-simple solution is to create a thread (or process) for each client , block on read 
-until a request is sent and write a response. This is working ok with a
-small number of clients but if we want to scale it to hundreds of clients, creating a 
-thread for each client is a bad idea
-
-The solution is to use a kernel mechanism for polling over a set of file descriptors. 
 
 There are 3 options you can use in Linux: select, poll,epoll
 
@@ -40,8 +33,10 @@ structure
 3, epoll () system call
 epoll is a Linux kernel system call for a scalable I/O to achieve better performance in more 
 demanding applications, where the number of watched file descriptors is large (unlike the
- older system  calls, which operate in O(n) time, epoll operates in O(1) 
-1.  epoll instance are in kernel
+older system  calls, which operate in O(n) time, epoll operates in O(1) 
+1. epoll instance are in kernel
+2. add and remove file descriptors to/from the context using epoll_ctl
+3.wait for events in the context using epoll_wait
 
 */
 

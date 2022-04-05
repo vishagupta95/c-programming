@@ -1,16 +1,23 @@
 
 /*
-Algorithm to find the diameter of a binary tree
-Let, "root" be the root node of given binary tree.
-If root is NULL, return 0.
-Calculate of height of left and right sub tree. Let it be leftHeight and rightHeight.
-The longest path which passes through root is leftHeight + rightHeight + 1.
-Recursively calculate the diameter of left and right subtree. Let it be leftDiameter and rightDiameter.
-Return maximum of leftDiameter, rightDiameter and leftHeight + rightHeight + 1.
-Time Complexity : O(n2)
-
-. A binary tree diameter equals the total number of nodes on the longest path between any two leaves in it
-
+ *                   4
+ *             7          8
+ *                     1     0
+ *                  3          
+ *
+ * Longest Path available is 7 - 4 - 8 - 1 - 3 of length 4
+ *
+ * Recursion method
+ *
+ *The depth of a node is the number of edges present in path from the root node of a tree to that node.
+ * The height of a node is the number of edges present in the longest path connecting that node to a leaf node
+ *
+ * Calculate of height of left and right sub tree. Let it be leftHeight and rightHeight.
+ * The longest path which passes through root is leftHeight + rightHeight + 1.
+ * Recursively calculate the diameter of left and right subtree. Let it be leftDiameter and rightDiameter.
+ * Return maximum of leftDiameter, rightDiameter and leftHeight + rightHeight + 1.
+ * Time Complexity : O(n2)
+    But it occupies stack space in memory and can be harder to debug because of the recursion involved.
 */
 
 #include <stdio.h>
@@ -112,3 +119,48 @@ int main() {
     getchar();
     return 0; 
 }
+
+
+/* Solution 2 Post Order Traversal
+
+e use stacks to perform a post order traversal of the binary tree. A hash-map can be used to maintain the maximum depth at each of the nodes in the tree.
+
+Code:
+  public int diameterOfBinaryTree(TreeNode root) {
+
+    Map<TreeNode, Integer> map = new HashMap<>();
+    Stack<TreeNode> stack = new Stack<>();
+    int diameter = 0;
+
+    if (root != null)
+      stack.push(root);
+
+    while (!stack.isEmpty()) {
+      TreeNode node = stack.peek();
+
+      // Fill up stack to perform post-order traversal
+      if (node.left != null && !map.containsKey(node.left)) {
+        stack.push(node.left);
+      } else if (node.right != null && !map.containsKey(node.right)) {
+        stack.push(node.right);
+      } else {
+
+        // Process the root, once left and right sub-tree have been processed
+        stack.pop();
+        int leftDepth = map.getOrDefault(node.left, 0);
+        int rightDepth = map.getOrDefault(node.right, 0);
+
+        // Put the max depth at a node in the map
+        map.put(node, 1 + Math.max(leftDepth, rightDepth));
+
+        // Update the max diameter found so far
+        diameter = Math.max(diameter, leftDepth + rightDepth);
+      }
+    }
+    return diameter;
+  }
+Code language: Java (java)
+Time Complexity: O(n)O(n)
+Space Complexity: O(n)O(n)
+
+*/

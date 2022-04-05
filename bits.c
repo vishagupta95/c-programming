@@ -5,6 +5,31 @@
 #define FD_CLR(n, p) (n &= ~(1 << p))
 #define FD_RESET(n, p) (n ^= (1 << p))
 
+int nibble_patern()
+{
+   unsigned char data = 0x23; //value in hex
+   unsigned char temp1 = (data & 0x0F)<<4;
+   unsigned char temp2 = (data & 0xF0)>>4;
+   unsigned char output =0;
+
+   if ( temp1 & 0x2) {
+        temp1 | 0X3;
+   }
+   
+   if ( temp2 & 0x2) {
+        temp2 | 0X3;
+   }
+ 
+   output  = temp1 | temp2;
+
+   printf("input = %x \n",data);
+   printf("output = %x \n",output);
+ 
+   return 0;
+}
+
+
+
 /* little to big endian */
 #define SWAP_INT32(x) (((x) >> 24) | (((x)&0x00FF0000) >> 8) | (((x)&0x0000FF00) << 8) | ((x) << 24))
 

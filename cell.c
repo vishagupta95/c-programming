@@ -58,7 +58,7 @@ int *check(int arr[], int days)
         }
 
         printf("\n");
-    }
+    }  /* end of for loop */
     return &arr[0];
     ;
 }

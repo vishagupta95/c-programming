@@ -6,9 +6,8 @@
 *
 *  NULL pointer is usually defined as:#define NULL (void *)0
 *  ASCII character '0' evaluates to 48 or 0x30.
-* '\0' is defined to be a null character 
-*  \0 is 0
-*  0 is 48
+* '\0' is defined to be a null character  \0 is 0
+*
 *  In C language string is nothing but an array of char 1 byte. Each array is terminated with null character of 1 byte 
 *  Integer arrays are not C-style strings, and there is no null-terminator values in them
 *

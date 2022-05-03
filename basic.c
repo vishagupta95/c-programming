@@ -25,22 +25,6 @@ and then I draw a little binary tree, this one goes from depth d=0 to d=3:
             d=3    R B RB RB R B
 
 
-void *philosopher(void *params)
-{
-  int i;
-  params_t self = *(params_t *)params;
-
-  for(i = 0; i < 3; i++) {
-    think(self.position);
-
-    sem_wait(self.lock);
-    sem_wait(&self.forks[self.position]);
-    sem_wait(&self.forks[(self.position + 1) % self.count]);
-    eat(self.position);
-    sem_post(&self.forks[self.position]);
-    sem_post(&self.forks[(self.position + 1) % self.count]);
-    sem_post(self.lock);
-  }
 // On 32-bit machine sizeof pointer is 32 bits ( 4 bytes), while on 64 bit machine it's 8 byte
 
 /*

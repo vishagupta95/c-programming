@@ -3,7 +3,15 @@
 #define my_sizeof(type) (char *)(&type + 1) - (char *)(&type)
 #define concat(a, b) a##b
 #define MAX(i, j) (((i) > (j)) ? i : j)
+
 /*
+static char ZEROARRAY[1024]; // if declaration is in global scope or is static it will alredy be initialized to Zeroes
+ OR
+char ZEROARRAY[1024] = {0}; // Compiler fills unwritten entries with zeroes
+ OR
+memset(ZEROARRAY, 0, 1024); // Alternatively you could use memset to initialize the array at program startup:
+
+
  * For me the easiest way was to look at a graph of log2(n), where n
  * is the number of nodes in the binary tree. As a table this looks like:
 

@@ -3,7 +3,10 @@
 
 /*
 Height of a node is the no of edges we travel between the root node and node , 
-while traveling in top down manner. Height of root node is 0.
+A tree with only root node has height 0 
+A tree with only  2 node has height 1 
+and a tree with zero nodes would be considered as empty. An empty tree has height of -1.
+
 
 Level of a binary tree start from root node with value 0 . Everytime we move from top side of the tree towards 
 the bottom side we increase the level by one.
@@ -34,7 +37,7 @@ struct node {
 int maxDepth(struct node* node)
 {
 	if (node == NULL)
-	     return -1;
+	     return 0;
 	else {
 		/* compute the depth of each subtree */
 		int lDepth = maxDepth(node->left);
@@ -60,6 +63,53 @@ struct node* newNode(int data)
 
 	return (node);
 }
+
+/* Method 2 : Iterative ,Time Complexity: O(n)  */
+// Iterative function to calculate the height of a given binary tree
+// by doing level order traversal on the tree
+int height(Node* root)
+{
+    // empty tree has a height of 0
+    if (root == nullptr) {
+        return 0;
+    }
+ 
+    // create an empty queue and enqueue the root node
+    list<Node*> queue;
+    queue.push_back(root);
+ 
+    Node* front = nullptr;
+    int height = 0;
+ 
+    // loop till queue is empty
+    while (!queue.empty())
+    {
+        // calculate the total number of nodes at the current level
+        int size = queue.size();
+ 
+        // process each node of the current level and enqueue their
+        // non-empty left and right child
+        while (size--)
+        {
+            front = queue.front();
+            queue.pop_front();
+ 
+            if (front->left) {
+                queue.push_back(front->left);
+            }
+ 
+            if (front->right) {
+                queue.push_back(front->right);
+            }
+        }
+ 
+        // increment height by 1 for each level
+        height++;
+    }
+ 
+    return height;
+}
+
 
 int main()
 {

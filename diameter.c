@@ -18,6 +18,9 @@
  * Return maximum of leftDiameter, rightDiameter and leftHeight + rightHeight + 1.
  * Time Complexity : O(n2)
     But it occupies stack space in memory and can be harder to debug because of the recursion involved.
+    Time Complexity: O(n2)
+
+    Auxiliary Space: O(n) for call stack
 */
 
 #include <stdio.h>

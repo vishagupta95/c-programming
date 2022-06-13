@@ -3,6 +3,48 @@
 #include <math.h>
 #include <stdbool.h>
 
+/*
+ascii code  48  0   (number zero)        
+ascii code  49  1   (number one)        
+ascii code  50  2   (number two)        
+ascii code  51  3   (number three)        
+ascii code  52  4   (number four)        
+ascii code  53  5   (number five)        
+ascii code  54  6   (number six)        
+ascii code  55  7   (number seven)        
+ascii code  56  8   (number eight)        
+ascii code  57  9   (number nine)        
+ascii code  58  :   (Colon)        
+ascii code  59  ;   (Semicolon)        
+ascii code  60  <   (Less-than sign )        
+ascii code  61  =   (Equals sign)        
+ascii code  62  >   (Greater-than sign ; Inequality)        
+ascii code  63  ?   (Question mark)        
+ascii code  64  @   (At sign)        
+ascii code  65  A   (Capital A )        
+ascii code  66  B   (Capital B 
+
+int charToInt(char c){
+    int num = 0;
+
+    //Substract '0' from entered char to get
+    //corresponding digit
+    num = c - '0';
+
+    return num;
+}
+
+
+int int_toCHar(void)
+{
+    int number=71;
+
+    char charValue = number+'0';
+    printf("The character value is :%c",charValue);
+
+    return 0;
+
+
 int abs_test () {
    int a, b;
 

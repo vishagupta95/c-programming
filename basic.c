@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #define my_sizeof(type) (char *)(&type + 1) - (char *)(&type)
 #define concat(a, b) a##b

@@ -21,6 +21,19 @@
     Time Complexity: O(n2)
 
     Auxiliary Space: O(n) for call stack
+
+Approach 2: Using DFS
+We can also use the Depth Fisrt Search algorithm to calculate the diameter. Since the longest path always occurs between 2 leaf nodes, if we calculate the farthest node from a leaf node, then we can find the longest path in the tree.
+
+We perform the following steps:
+
+Start at the root node and find the farthest node from it using DFS.
+Consider this farthest node to be the start node of the longest path.
+Find the farthest node from the start node using DFS.
+This farthest node will be the end node of the longest path.
+Time Complexity: O(n)
+Space complexity: O(n)
+
 */
 
 #include <stdio.h>

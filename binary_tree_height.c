@@ -2,13 +2,14 @@
 #include <stdlib.h>
 
 /*
-1>Height of a node is the no of edges we travel between the root node and node , 
+1>The height of a binary tree is equal to the largest number of edges from the root to the most distant leaf node.
+note: edge is a line which join 2 nodes so 2 nodes create 1 edge
 2>A tree with only root node has height 0 
 3>A tree with only  2 node has height 1 
 4>tree with zero nodes would be considered as empty. An empty tree has height of -1.
 5>left skewed binary tree shown  with 5 nodes has height 5-1 = 4 
-
-* A binary tree node has data, pointer to left child and a pointer to right child */
+6)the height is h  is O(logn)
+7) A binary tree node has data, pointer to left child and a pointer to right child */
 
 typedef struct node {
 	int data;

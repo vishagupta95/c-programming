@@ -1,18 +1,39 @@
 #include <stdio.h>
-#define my_sizeof(type) (char *)(&type + 1) - (char *)(&type)
-#define concat(a, b) a##b
-#define MAX(i, j) (((i) > (j)) ? i : j)
+#include <stdlib.h>  // malloc etc
 
 /*
-static char ZEROARRAY[1024]; // if declaration is in global scope or is static it will alredy be initialized to Zeroes
- OR
-char ZEROARRAY[1024] = {0}; // Compiler fills unwritten entries with zeroes
- OR
-memset(ZEROARRAY, 0, 1024); // Alternatively you could use memset to initialize the array at program startup:
-
-
- * For me the easiest way was to look at a graph of log2(n), where n
- * is the number of nodes in the binary tree. As a table this looks like:
+*
+* char s[]="help";
+* strlen(s) should return 4.
+* sizeof: Returns the length of the given byte string, include null terminator;
+*
+* char s[]="help";
+* sizeof(s) should return 5
+*
+* strcpy(ptr2, ptr1) is equivalent to while(*ptr2++ = *ptr1++)
+* where as strdup is equivalent to
+* ptr2 = malloc(strlen(ptr1)+1);
+* strcpy(ptr2,ptr1);
+*
+*
+* 1)  NULL pointer is usually defined as:#define NULL (void *)0                                                                                            
+* 2) ASCII character '0' evaluates to 48 or 0x30.
+*
+* 3)'\0' is defined to be a null character  \0 is 0
+*
+* ascii code    48  0   (number zero)           
+* ascii code    49  1   (number one)            
+* ascii code    65  A   (Capital A )            
+* ascii code    66  B   (Capital B )            
+* ascii code    97  a   (Lowercase  a )         
+* ascii code    98  b   (Lowercase  b )         
+* ascii code    122 z   (Lowercase  z )     
+*
+* 4) In C language string is nothing but an array of char 1 byte. Each array is terminated with null character of 1 byte 
+*  Integer arrays are not C-style strings, and there is no null-terminator values in them
+*
+* For me the easiest way was to look at a graph of log2(n), where n
+* is the number of nodes in the binary tree. As a table this looks like:
 
           log2(n) = d
 
@@ -32,26 +53,53 @@ and then I draw a little binary tree, this one goes from depth d=0 to d=3:
             d=3    R B RB RB R B
 
 
-// On 32-bit machine sizeof pointer is 32 bits ( 4 bytes), while on 64 bit machine it's 8 byte
+5) On 32-bit machine sizeof pointer is 32 bits ( 4 bytes), while on 64 bit machine it's 8 byte
+
+
+*/
+
+/* coding Guideline
+ *
+ * 1.   main and other functions should start with a curly brace on a new  line
+ * 2.   Use 4 space gap after the start of function or while loop on a new  line
+ * 3.   Use  single space before and after every variable  assignment
+ * 4.   Inside a for loop space immediately after first and second semicolon
+ * 5.   Space after if  before bracket
+ * 6.   Space after for loop  before bracket
+ * 7.   Space after while loop  before bracket
+
+static void
+print_element_names(xmlNode * a_node, char *argt)
+{
+    xmlNode *cur_node = NULL;
+
+    for (cur_node = a_node; cur_node; cur_node = cur_node->next) {
+        if (cur_node->type == XML_ELEMENT_NODE) {
+            printf("node type: Element, name: %s\n", cur_node->name);
+        }
+
+        print_element_names(cur_node->children);
+    }
+
+    while (ret == 1) {
+       ret = xmlTextReaderRead(reader);
+    }
+}
+
+int
+main(int argc, char **argv)
+{
+    xmlDoc *doc = NULL;
+    xmlNode *root_element = NULL;
+
+    if (argc != 2)
+        return(1);
+}
+*/
+
+
 
 /*
- *
- * strlen: Returns the length of the given byte string not including null terminator;                                                                                           
- *
- * char s[]="help";
- * strlen(s) should return 4.
- * sizeof: Returns the length of the given byte string, include null terminator;
- *
- * char s[]="help";
- * sizeof(s) should return 5
- *
- * strcpy(ptr2, ptr1) is equivalent to while(*ptr2++ = *ptr1++)
- *
- * where as strdup is equivalent to
- *
- * ptr2 = malloc(strlen(ptr1)+1);
- * strcpy(ptr2,ptr1);
- *
  *
  *
  * #define DUAL_IP_MIN_MTU(x,y,z)       (x)>(y)?((x)>(z)?((y)>(z)?(z):(y)):(y)):((x)>(z)?(z):(x))
@@ -80,8 +128,20 @@ and then I draw a little binary tree, this one goes from depth d=0 to d=3:
     for(i = 0; i < nrows; i++)
            array1[i] = malloc(ncolumns * sizeof(int));
  *
- * /
+ */
 
+
+/* Macro */
+#define my_sizeof(type) (char *)(&type + 1) - (char *)(&type)
+#define concat(a, b) a##b
+#define MAX(i, j) (((i) > (j)) ? i : j)
+
+/*  memseting array*/
+static char ZEROARRAY[1024]; // if declaration is in global scope or is static it will alredy be initialized to Zeroes
+ OR
+char ZEROARRAY[1024] = {0}; // Compiler fills unwritten entries with zeroes
+ OR
+memset(ZEROARRAY, 0, 1024); // Alternatively you could use memset to initialize the array at program startup:
 
 enum week
 {
@@ -174,4 +234,5 @@ int main(void)
     size_test();
     struck_test();
 }
+
 

@@ -1,69 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>  // malloc etc
 
-/*
-*
-*
-*  NULL pointer is usually defined as:#define NULL (void *)0
-*  ASCII character '0' evaluates to 48 or 0x30.
-* '\0' is defined to be a null character  \0 is 0
-* ascii code    48  0   (number zero)           
-* ascii code    49  1   (number one)            
-* ascii code    62  >   (Greater-than sign ; Inequality)            
-* ascii code    63  ?   (Question mark)         
-* ascii code    64  @   (At sign)           
-* ascii code    65  A   (Capital A )            
-* ascii code    66  B   (Capital B )            
-* ascii code    97  a   (Lowercase  a )         
-* ascii code    98  b   (Lowercase  b )         
-* ascii code    122 z   (Lowercase  z )     
-*
-*  In C language string is nothing but an array of char 1 byte. Each array is terminated with null character of 1 byte 
-*  Integer arrays are not C-style strings, and there is no null-terminator values in them
-*
-*/
-
-
-/* coding Guideline
- *
- * 1.   main and other functions should start with a curly brace on a new  line
- * 2.   Use 4 space gap after the start of function or while loop on a new  line
- * 3.   Use  single space before and after every variable  assignment 
- * 4.   Inside a for loop space immediately after first and second semicolon
- * 5.   Space after if  before bracket 
- * 6.   Space after for loop  before bracket 
- * 7.   Space after while loop  before bracket 
-
-static void
-print_element_names(xmlNode * a_node)
-{
-    xmlNode *cur_node = NULL;
-
-    for (cur_node = a_node; cur_node; cur_node = cur_node->next) {
-        if (cur_node->type == XML_ELEMENT_NODE) {
-            printf("node type: Element, name: %s\n", cur_node->name);
-        }
-
-        print_element_names(cur_node->children);
-    }
-
-    while (ret == 1) {
-       ret = xmlTextReaderRead(reader);
-    }
-}
-
-int
-main(int argc, char **argv)
-{
-    xmlDoc *doc = NULL;
-    xmlNode *root_element = NULL;
-
-    if (argc != 2)
-        return(1);
-*/
-
-
-
 /* C program to demonstrate how to pass array of integer to a function*/
 
 void displayString(char **argv,char *argt[], int argc, char *array, char array2[])

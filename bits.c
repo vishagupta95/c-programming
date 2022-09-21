@@ -5,20 +5,15 @@
 #define FD_CLR(n, p) (n &= ~(1 << p))
 #define FD_RESET(n, p) (n ^= (1 << p))
 
-int nibble_change()
+int nibble_change(int a ,int b)
 {
    unsigned char data = 0x23; //value in hex
    unsigned char temp1 = (data & 0x0F);
    unsigned char temp2 = (data & 0xF0)>>4;
    unsigned char output =0;
 
-   if ( temp1 & 0x2) {
-        temp1 = 0X3;
-   }
-   
-   if ( temp2 & 0x3) {
-        temp2 = 0X3;
-   }
+   temp2 = a;
+   temp1 = b;
  
    printf("temp1 = %x \n",temp1);
    printf("temp2 = %x \n",temp2);
@@ -119,7 +114,8 @@ unsigned int mod_bits(unsigned int x, unsigned int pos, unsigned int val)
 int main()
 {
     unsigned int x = 1;
-    printf("%0X", reverseBits(x));
-    mod_bits(6, 2, 0);
+    //printf("%0X", reverseBits(x));
+    //mod_bits(6, 2, 0);
+    nibble_change(8,9);
     return 0;
 }

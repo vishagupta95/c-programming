@@ -13,6 +13,22 @@ void delete_from_begin();
 void delete_from_end();
 int count = 0;
 
+void reverse(NODE ** temp) {
+
+  NODE * q, * r, * s;
+  q = * temp;
+  r = NULL;
+  while (q) {
+    s = r;
+    r = q;
+    q = q -> next;
+    r -> next = s;
+
+  }
+  * temp = r;
+}
+
+
 int main () {
   int i, data;
 

@@ -4,6 +4,7 @@
 #include <limits.h>
 #include <stdbool.h>
 
+#define nullptr ((void*)0)
 
 typedef struct node 
 { 
@@ -11,6 +12,28 @@ typedef struct node
     struct node *left, *right; 
 }Node;
 
+void mirror_tree(Node* root) {
+  
+  if (root == NULL) {
+    return;
+  }
+
+  // We will do a post-order traversal of the binary tree.
+
+  if (root->left != nullptr) {
+    mirror_tree(root->left);
+  }
+
+  if (root->right != nullptr) {
+    mirror_tree(root->right);
+  }
+
+  // Let's swap the left and right nodes at current level.
+
+  Node* temp = root->left;
+  root->left = root->right;
+  root->right = temp;
+}
 
 bool isBST(Node* node, int min, int max) {
     // Base case. An empty tree is a BST.

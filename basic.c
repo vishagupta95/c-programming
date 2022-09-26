@@ -235,4 +235,67 @@ int main(void)
     struck_test();
 }
 
+include <stdio.h>                                                                                                                               
+#include <stdlib.h>
 
+int main(int argc, char *argv[]) 
+{ 
+   int sum = 0, i;  
+ 
+   for (i=1; i< argc; i++) 
+      sum += atoi(argv[i]); /* could have used *++argv */
+ 
+   printf("%d\n", sum); 
+   return 0;  
+} 
+#include <assert.h>
+
+int main()
+{ 
+    int x = 7;
+ 
+    /* Some big code in between and let's say x
+    is accidentally changed to 9 */
+    x = 9;
+   
+    // Programmer assumes x to be 7 in rest of the code
+    assert(x==7); // crash if not 7
+
+    /* Rest of the code */
+
+    return 0;
+}
+
+/*
+The '0' has an ASCII value of 48. so, we have to add its value to the integer value to convert it into the desired character. The program is as below:
+NULL byte is represented by '\0' or '0' (zero) or NULL. A
+*/
+
+int main () {
+   int a, b;
+   int number=7;  
+   char charValue=number+'0';
+   printf("The value is :%c",charValue);
+
+   a = abs(5);
+   printf("value of a = %d\n", a); 
+
+   b = abs(-10);
+   printf("value of b = %d\n", b); 
+   
+   return(0);
+}
+
+# output is 9 10 11                                                                                                                       
+int m(){
+static int x =9;
+x++;
+printf("%d \n",x);
+}
+
+int main(){ 
+m();         
+m();
+m();
+}
+~           ~          

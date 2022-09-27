@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>  // malloc etc
 #include <stdlib.h>  // malloc etc
 
 /* C program to demonstrate how to pass array of integer to a function*/
@@ -8,7 +9,8 @@ void displayString(char **argv,char *argt[], int argc, char *array, char array2[
 
     int i = 0;
     char *strg1 = array;
-     
+
+    printf("strlen of array is %d  \n" ,strlen(array));    
  
     printf("String test  Method 1\n\n");
     
@@ -47,7 +49,7 @@ void displayString(char **argv,char *argt[], int argc, char *array, char array2[
 
 int displayString_test()
 {
-    char array[] = "king";
+    char array[] = "vishal  gupta";
     char *buff[] = {"aap", "bap", "cat", "dog"};
     int argc = sizeof(buff) / sizeof(buff[0]);
     printf("argc = %d\n ", argc);

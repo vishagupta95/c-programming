@@ -38,6 +38,54 @@ older system  calls, which operate in O(n) time, epoll operates in O(1)
 2. add and remove file descriptors to/from the context using epoll_ctl
 3.wait for events in the context using epoll_wait
 
+
+The functions select(), poll(), and epoll() are all used in Unix-like operating systems for asynchronous I/O and event handling, but they have different mechanisms and capabilities. Here's an overview of each:
+
+select():
+---------------
+select() is one of the oldest and most basic methods for handling multiple I/O operations concurrently in Unix-like systems.
+It allows a program to monitor multiple file descriptors (e.g., sockets, files, or pipes) for various events (e.g., read, write, or error) and determine which ones are ready for I/O operations.
+select() has some limitations, such as limited scalability when dealing with a large number of file descriptors, and it is less efficient than more modern alternatives like poll() and epoll().
+poll():
+Portability: select() is widely available on various Unix-like systems, making it a portable choice for cross-platform development.
+FD Set Limit: It has a limitation on the maximum number of file descriptors you can monitor (typically 1024 or 2048).
+O(N) Complexity: As you add more file descriptors to the set, the time complexity for checking readiness is O(N), making it less efficient for a large number of descriptors.
+Constant Timeout: You can specify a timeout value for select(), but it can only wait for a fixed period.
+poll():
+
+
+poll() 
+--------------
+is another system call for monitoring multiple file descriptors, introduced as a more scalable and efficient alternative to select().
+It allows you to wait for events on a set of file descriptors and find out which ones are ready for I/O without some of the limitations of select().
+poll() is better suited for handling a larger number of file descriptors than select(), but it can still become inefficient when dealing with a very high number of descriptors.
+epoll():
+
+Portability: Like select(), poll() is also available on various Unix-like systems and is portable.
+Higher FD Limits: It generally supports a higher number of file descriptors compared to select(), but it can still be limited by system-specific constraints.
+O(N) Complexity: Similar to select(), the time complexity of checking readiness is O(N).
+Constant Timeout: poll() also supports specifying a timeout value for waiting.
+epoll():
+
+epoll() 
+----------
+
+epoll() is the most advanced and efficient of the three methods for asynchronous I/O and event handling, primarily used on Linux systems.
+It leverages kernel-level data structures to efficiently monitor and manage large numbers of file descriptors.
+epoll() provides a more scalable and performant solution compared to select() and poll(). It is well-suited for high-performance network applications and servers that need to handle a large number of concurrent connections efficiently.
+It offers different operating modes, such as edge-triggered and level-triggered, for fine-grained control over event notifications.
+In summary, while all three functions serve similar purposes, epoll() is generally the preferred choice for high-performance I/O and event-driven applications on Linux systems due to its efficiency and scalability. 
+select() and poll() are older and less efficient, but they may still be suitable for simpler applications or when portability to non-Linux platforms is a concern.
+
+ertainly, here's a more detailed comparison of select(), poll(), and epoll() highlighting their key differences:
+
+
+Linux Specific: epoll() is Linux-specific and not portable to other Unix-like systems.
+Scalability: It is highly scalable and efficient, especially for applications with a large number of file descriptors. The kernel handles the readiness notifications, reducing CPU overhead.
+Event Notification Modes: epoll() offers both edge-triggered (ET) and level-triggered (LT) modes, providing fine-grained control over when events are reported.
+Efficiency: It maintains a dynamic list of ready file descriptors, so the time complexity for checking readiness is O(1), making it very efficient even for a large number of descriptors.
+Monitoring: You can efficiently monitor thousands or even tens of thousands of file descriptors without significant performance degradation.
+Timeouts: epoll() supports both blocking and non-blocking modes, allowing you to wait indefinitely or with a timeout.
 */
 
 #include <stdio.h>

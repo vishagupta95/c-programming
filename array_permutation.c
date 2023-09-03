@@ -2,41 +2,53 @@
  * Algorithm Paradigm: Backtracking 
 
 Time Complexity: O(n*n!) Note that there are n! permutations and it requires O(n) time to print a permutation.
+ you can use recursion. Here's a C program to achieve this:
+
+c
+
 
 Auxiliary Space: O(r – l)
 */
-// C program to print all permutations with duplicates allowed
 #include <stdio.h>
-#include <string.h>
 
-/* Function to swap values at two pointers */
-void swap(char *x, char *y)
-{
-	char temp;
-	temp = *x;
-	*x = *y;
-	*y = temp;
+// Function to swap two elements in an array
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
 }
 
-/* Function to print permutations of string
-This function takes three parameters:
-1. String
-2. Starting index of the string
-3. Ending index of the string. */
-void permute(char *a, int l, int r)
-{
-int i;
-if (l == r)
-	printf("%s\n", a);
-else
-{
-	for (i = l; i <= r; i++)
-	{
-		swap((a+l), (a+i));
-		permute(a, l+1, r);
-		swap((a+l), (a+i)); //backtrack
-	}
+// Function to print all permutations of an array
+void printPermutations(int arr[], int start, int end) {
+    if (start == end) {
+        // Base case: When we reach the end of the array, print the permutation
+        for (int i = 0; i <= end; i++) {
+            printf("%d ", arr[i]);
+        }
+        printf("\n");
+    } else {
+        // Recursive case: Generate permutations by swapping elements
+        for (int i = start; i <= end; i++) {
+            // Swap the current element with itself and all subsequent elements
+            swap(&arr[start], &arr[i]);
+            
+            // Recursively generate permutations for the remaining elements
+            printPermutations(arr, start + 1, end);
+            
+            // Restore the array to its original state (backtrack)
+            swap(&arr[start], &arr[i]);
+        }
+    }
 }
+
+int main() {
+    int arr[] = {1, 2, 2};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    printf("All permutations of the array:\n");
+    printPermutations(arr, 0, n - 1);
+
+    return 0;
 }
 
 /* Driver program to test above functions */

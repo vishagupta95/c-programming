@@ -1,8 +1,10 @@
 /*
 https://www.binarytides.com/raw-sockets-c-code-linux/
+Raw sockets provide access to the transport layer (e.g., TCP, UDP) and sometimes even lower layers (e.g., IP or ICMP) of the networking stack. This low-level access allows developers to craft
+custom packets and have full control over the header fields.
 $ gcc raw_socket.c -o raw_socket
 $ sudo ./raw_socket
-
+*/
     Raw TCP packets
 */
 #include <stdio.h>  //for printf

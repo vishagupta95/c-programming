@@ -3,6 +3,7 @@
 // Macro for converting integer Celsius to Fahrenheit
 #define INT_C_TO_F(celsius) ((celsius) * 9/5 + 32)
 
+
 // Macro for converting floating-point Celsius to Fahrenheit
 #define FLOAT_C_TO_F(celsius) ((celsius) * 9.0/5 + 32)
 

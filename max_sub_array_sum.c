@@ -1,41 +1,38 @@
-// C++ program to print largest contiguous array sum 
-#include<stdio.h> 
-#include<limits.h> 
-/* We alays belived all sum is the max sub array,excpept we encouber large negative number */
+#include <stdio.h>
+#include <limits.h>
 
+// Kadane's Algorithm for Maximum Subarray Sum
+int maxSubArraySum(int a[], int size) {
+    int max_so_far = INT_MIN; // Maximum sum of subarray ending at the current index
+    int max_ending_here = 0;  // Current sum of subarray ending at the current index
 
-int maxSubArraySum(int a[], int size) 
-{
-    int max_so_far = INT_MIN, max_ending_here = 0; 
+    for (int i = 0; i < size; i++) {
+        // Add the current element to the current subarray sum
+        max_ending_here += a[i];
 
-    for (int i = 0; i < size; i++) 
-    { 
-        max_ending_here = max_ending_here + a[i]; 
-        printf("count %2d  current val %2d max_ending_here %2d  %d ",i,a[i],max_ending_here,INT_MIN);
-
+        // Update max_so_far if the current subarray sum is greater
         if (max_so_far < max_ending_here) {
-            max_so_far = max_ending_here; 
-            printf(",max_so_far_change%2d ",max_so_far);
-        }    
-
-        if (max_ending_here < 0) {
-            printf(",max_ending_here negative %2d ",max_ending_here);
-            max_ending_here = 0; 
+            max_so_far = max_ending_here;
         }
 
-        printf("\n");    
-    } 
-    return max_so_far; 
-} 
+        // Reset the current subarray sum to 0 if it becomes negative
+        if (max_ending_here < 0) {
+            max_ending_here = 0;
+        }
+    }
 
-/*Driver program to test maxSubArraySum*/
-int main() 
-{ 
-    int a[] = {10, 10, 10, -31,20,-20,20}; 
-    printf("%d %d \n",INT_MIN,INT_MAX); 
-    int n = sizeof(a)/sizeof(a[0]); 
-    int max_sum = maxSubArraySum(a, n); 
-    printf( "Maximum contiguous sum is  %u \n",max_sum); 
-    return 0; 
-} 
+    return max_so_far;
+}
+
+int main() {
+    int a[] = {10, 10, 10, -31, 20, -20, 20};
+    printf("INT_MIN: %d, INT_MAX: %d \n", INT_MIN, INT_MAX);
+
+    int n = sizeof(a) / sizeof(a[0]);
+    int max_sum = maxSubArraySum(a, n);
+
+    printf("Maximum contiguous sum is %d\n", max_sum);
+
+    return 0;
+}
 

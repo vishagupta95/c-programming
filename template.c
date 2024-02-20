@@ -1,153 +1,193 @@
-#include <stdarg.h>
-#include <stdio.h>
-#define INT 0
-#define STR 1
-
-
-#define CAT(X,Y) X##_##Y
-#define TEMPLATE(X,Y) CAT(X,Y)
-
 /*
- * The goal of macro TEMPLATE(X,Y) is to have a keyword that enables us to concatenate X and Y with an underscore 
- * in between, like this: X_Y, so that writing TEMPLATE(function,type) may translate to function_type.
-*/
+ *
+Creating something similar to C++ templates in C involves using void pointers and function pointers to achieve a form of genericity.*/
 
-void foo( int type, ... )
-{
-    va_list ap;
-    int i;
-    char *s;
-    va_start( ap, type );
-    switch( type ) {
-    case INT:
-        i = va_arg( ap, int );
-        printf( "INT: %i\n", i );
-        break;
-    case STR:
-        s = va_arg( ap, char * );
-        printf( "STR: %s\n", s );
-        break;
-    default:
-        break;
-    }
-    va_end( ap );
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node {
+    void* data;
+    struct Node* next;
+} Node;
+
+typedef struct {
+    Node* top;
+    size_t element_size;
+} Stack;
+
+// Function to initialize the stack
+void initStack(Stack* stack, size_t element_size) {
+    stack->top = NULL;
+    stack->element_size = element_size;
 }
-#define SWAP( type, a, b ) {                    \
-        type t;                                 \
-        t = a;                                  \
-        a = b;                                  \
-        b = t;                                  \
+
+// Function to push an element onto the stack
+void push(Stack* stack, const void* data) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    if (newNode == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(EXIT_FAILURE);
     }
-int main_x( void )
-{
-    foo( INT, 3 );
-    foo( STR, "baz" );
-    int ia = 0, ib = 3;
-    SWAP( int, ia, ib );
-    printf( "%i %i\n", ia, ib );
-    float fa = 0.5, fb = 3.14;
-    SWAP( float, fa, fb );
-    printf( "%f %f\n", fa, fb );
+
+    newNode->data = malloc(stack->element_size);
+    if (newNode->data == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // Copy the data to the newly allocated memory
+    for (size_t i = 0; i < stack->element_size; ++i) {
+        *((char*)newNode->data + i) = *((const char*)data + i);
+    }
+
+    newNode->next = stack->top;
+    stack->top = newNode;
+}
+
+// Function to pop an element from the stack
+void pop(Stack* stack) {
+    if (stack->top != NULL) {
+        Node* temp = stack->top;
+        stack->top = temp->next;
+        free(temp->data);
+        free(temp);
+    }
+}
+
+// Function to print the top element of the stack
+void printTop(const Stack* stack, void (*print)(const void*)) {
+    if (stack->top != NULL) {
+        print(stack->top->data);
+        printf("\n");
+    } else {
+        printf("Stack is empty\n");
+    }
+}
+
+// Example print function for integers
+void printInt(const void* data) {
+    printf("%d", *(const int*)data);
+}
+
+// Example print function for doubles
+void printDouble(const void* data) {
+    printf("%f", *(const double*)data);
+}
+
+int main() {
+    Stack intStack;
+    initStack(&intStack, sizeof(int));
+
+    int values[] = {1, 2, 3, 4, 5};
+    for (size_t i = 0; i < sizeof(values) / sizeof(values[0]); ++i) {
+        push(&intStack, &values[i]);
+    }
+
+    printf("Top of Int Stack: ");
+    printTop(&intStack, printInt);
+
+    // Pop an element from the stack
+    pop(&intStack);
+
+    printf("Top of Int Stack after pop: ");
+    printTop(&intStack, printInt);
+
+    Stack doubleStack;
+    initStack(&doubleStack, sizeof(double));
+
+    double valuesD[] = {1.1, 2.2, 3.3, 4.4, 5.5};
+    for (size_t i = 0; i < sizeof(valuesD) / sizeof(valuesD[0]); ++i) {
+        push(&doubleStack, &valuesD[i]);
+    }
+
+    printf("Top of Double Stack: ");
+    printTop(&doubleStack, printDouble);
+
     return 0;
 }
-define define_list(type) \
-\
-    struct _list_##type; \
-    \
-    typedef struct \
-    { \
-        int (*is_empty)(const struct _list_##type*); \
-        size_t (*size)(const struct _list_##type*); \
-        const type (*front)(const struct _list_##type*); \
-        void (*push_front)(struct _list_##type*, type); \
-    } _list_functions_##type; \
-    \
-    typedef struct _list_elem_##type \
-    { \
-        type _data; \
-        struct _list_elem_##type* _next; \
-    } list_elem_##type; \
-    \
-    typedef struct _list_##type \
-    { \
-        size_t _size; \
-        list_elem_##type* _first; \
-        list_elem_##type* _last; \
-        _list_functions_##type* _functions; \
-    } List_##type; \
-    \
-    List_##type* new_list_##type(); \
-    bool list_is_empty_##type(const List_##type* list); \
-    size_t list_size_##type(const List_##type* list); \
-    const type list_front_##type(const List_##type* list); \
-    void list_push_front_##type(List_##type* list, type elem); \
-    \
-    bool list_is_empty_##type(const List_##type* list) \
-    { \
-        return list->_size == 0; \
-    } \
-    \
-    size_t list_size_##type(const List_##type* list) \
-    { \
-        return list->_size; \
-    } \
-    \
-    const type list_front_##type(const List_##type* list) \
-    { \
-        return list->_first->_data; \
-    } \
-    \
-    void list_push_front_##type(List_##type* list, type elem) \
-    { \
-        ... \
-    } \
-    \
-    _list_functions_##type _list_funcs_##type = { \
-        &list_is_empty_##type, \
-        &list_size_##type, \
-        &list_front_##type, \
-        &list_push_front_##type, \
-    }; \
-    \
-    List_##type* new_list_##type() \
-    { \
-        List_##type* res = (List_##type*) malloc(sizeof(List_##type)); \
-        res->_size = 0; \
-        res->_first = NULL; \
-        res->_functions = &_list_funcs_##type; \
-        return res; \
+
+#if 0 
+#include <stdio.h>
+#include <stdlib.h>
+
+#define DECLARE_STACK_TYPE(type)                       \
+    typedef struct type##StackNode {                   \
+        type data;                                     \
+        struct type##StackNode* next;                  \
+    } type##StackNode;                                  \
+                                                        \
+    typedef struct {                                   \
+        type##StackNode* top;                          \
+    } type##Stack;                                      \
+                                                        \
+    void init##type##Stack(type##Stack* stack) {       \
+        stack->top = NULL;                             \
+    }                                                   \
+                                                        \
+    void push##type##Stack(type##Stack* stack, type value) { \
+        type##StackNode* newNode = (type##StackNode*)malloc(sizeof(type##StackNode)); \
+        if (newNode == NULL) {                         \
+            fprintf(stderr, "Memory allocation failed\n"); \
+            exit(EXIT_FAILURE);                        \
+        }                                               \
+        newNode->data = value;                         \
+        newNode->next = stack->top;                    \
+        stack->top = newNode;                           \
+    }                                                   \
+                                                        \
+    type pop##type##Stack(type##Stack* stack) {        \
+        if (stack->top != NULL) {                      \
+            type##StackNode* temp = stack->top;        \
+            stack->top = temp->next;                   \
+            type data = temp->data;                    \
+            free(temp);                                \
+            return data;                               \
+        } else {                                       \
+            fprintf(stderr, "Stack underflow\n");      \
+            exit(EXIT_FAILURE);                        \
+        }                                               \
+    }                                                   \
+                                                        \
+    void printTop##type##Stack(const type##Stack* stack) { \
+        if (stack->top != NULL) {                      \
+            printf("%d\n", stack->top->data);          \
+        } else {                                       \
+            printf("Stack is empty\n");                \
+        }                                               \
     }
 
-#define is_empty(collection) \
-    collection->_functions->is_empty(collection)
+DECLARE_STACK_TYPE(int);
+DECLARE_STACK_TYPE(double);
+DECLARE_STACK_TYPE(char);
 
-#define size(collection) \
-    collection->_functions->size(collection)
+int mainx() {
+    intStack int_stack;
+    initIntStack(&int_stack);
+    pushIntStack(&int_stack, 42);
+    pushIntStack(&int_stack, 23);
+    printTopIntStack(&int_stack);
+    int popped_int = popIntStack(&int_stack);
+    printf("Popped Int: %d\n", popped_int);
+    printTopIntStack(&int_stack);
 
-#define front(collection) \
-    collection->_functions->front(collection)
+    doubleStack double_stack;
+    initDoubleStack(&double_stack);
+    pushDoubleStack(&double_stack, 3.14);
+    pushDoubleStack(&double_stack, 2.71);
+    printTopDoubleStack(&double_stack);
+    double popped_double = popDoubleStack(&double_stack);
+    printf("Popped Double: %f\n", popped_double);
+    printTopDoubleStack(&double_stack);
 
-#define push_front(collection, elem) \
-    collection->_functions->push_front(collection, elem)
+    charStack char_stack;
+    initCharStack(&char_stack);
+    pushCharStack(&char_stack, 'A');
+    pushCharStack(&char_stack, 'B');
+    printTopCharStack(&char_stack);
+    char popped_char = popCharStack(&char_stack);
+    printf("Popped Char: %c\n", popped_char);
+    printTopCharStack(&char_stack);
 
-
-#define List(type) \
-    List_##type
-
-#define new_list(type) \
-    new_list_##type()
-
-/* Define the data structures you need */
-#define_list(int)
-#define_list(float)
-
-int main()
-{
-    List(int)* a = new_list(int);
-    List(float)* b = new_list(float);
-
-    push_front(a, 5);
-    push_front(b, 5.2);
+    return 0;
 }
-
-
+#endif

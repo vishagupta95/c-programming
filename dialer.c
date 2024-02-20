@@ -2,75 +2,68 @@
 #include <string.h>
 #include <stdlib.h>
 
-/*
+// Function to search for contacts based on a partial phone number
+char *solution(char *A[], char *B[], int N, char *P)
+{
+    // Allocate memory dynamically for the result array
+    char *dest = malloc(1024);
+    if (dest == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
 
-// CPP program to illustrate strstr()
-#include <string.h>
-#include <stdio.h>
+    // Initialize the array with zeros
+    memset(dest, 0, 1024);
+
+    // Flag to check if there is any matching contact
+    int no_match = 1;
+
+    // Iterate through the contacts
+    for (int i = 0; i < N; i++)
+    {
+        // Check if the partial phone number is found in the current contact
+        if (strstr(B[i], P))
+        {
+            // Concatenate the contact name to the result array
+            strcat(dest, A[i]);
+            strcat(dest, " ");
+            no_match = 0;
+        }
+    }
+
+    // If no matching contact is found, set the result to "NO CONTACT"
+    if (no_match == 1)
+    {
+        strcpy(dest, "NO CONTACT");
+    }
+
+    // Return the dynamically allocated result array
+    return dest;
+}
 
 int main()
 {
-    // Take any two strings
-    char s1[] = "Fun with STL";
-    char s2[] = "STL";
-    char* p;
+    // Arrays of contact names and phone numbers
+    char *name[] = {"visha", "vishal", "vishal gupta", "vishalgupta95"};
+    char *name2[] = {"rishi", "vishal", "vishal gupta", "vishalgupta957"};
+    char *phone[] = {"9886983955", "9886983950", "9886983951", "9886983952"};
 
-    // Find first occurrence of s2 in s1
-    p = strstr(s1, s2);
+    // Calculate the size of the arrays
+    int size = sizeof(name) / sizeof(name[0]);
 
-    // Prints the result
-    if (p) {
-        strcpy(p, "Strings");
-        printf("%s", s1);
-    } else
-        printf("String not found\n");
+    // Print the size of the arrays
+    printf("size = %d\n", size);
 
-    return 0;
-}
+    // Search for contacts with a partial phone number and print the result
+    char *result1 = solution(name, phone, size, "9886");
+    printf("%s \n", result1);
+    
+    char *result2 = solution(name2, phone, size, "9886");
+    printf("%s \n", result2);
 
-*/
-
-#include <stdio.h>
-#include <string.h>
-
-// Structure to store phone book entries
-struct PhoneEntry {
-    char name[50];
-    char phoneNumber[15]; // Assuming phone numbers are up to 15 characters long
-};
-
-// Function to search for a phone number by name
-const char* findPhoneNumber(const char* name, struct PhoneEntry phoneBook[], int size) {
-    for (int i = 0; i < size; i++) {
-        if (strstr(phoneBook[i].name, name) != NULL) {
-            return phoneBook[i].phoneNumber;
-        }
-    }
-    return "Not Found"; // Return this if the name is not found
-}
-
-int main() {
-    // Create a simple phone book with a few entries
-    struct PhoneEntry phoneBook[] = {
-        {"Alice", "123-456-7890"},
-        {"Bob", "456-789-1230"},
-        {"Charlie", "789-123-4560"},
-    };
-
-    int size = sizeof(phoneBook) / sizeof(phoneBook[0]);
-
-    // Prompt the user for a name and look up the phone number
-    char searchName[50];
-    printf("Enter a name to find the associated phone number: ");
-    scanf("%s", searchName);
-
-    const char* phoneNumber = findPhoneNumber(searchName, phoneBook, size);
-
-    if (strcmp(phoneNumber, "Not Found") == 0) {
-        printf("Name not found in the phone book.\n");
-    } else {
-        printf("Phone number for %s: %s\n", searchName, phoneNumber);
-    }
+    // Free the dynamically allocated memory
+    free(result1);
+    free(result2);
 
     return 0;
 }

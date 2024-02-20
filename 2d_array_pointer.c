@@ -3,16 +3,16 @@
 
 // Function to create a 2D array and set values
 int** createAndSetArray(int rows, int cols) {
-    // Allocate memory for the 2D array
+    // Allocate memory for the 2D array (rows x cols)
     int **matrix = (int **)malloc(rows * sizeof(int *));
     for (int i = 0; i < rows; i++) {
         matrix[i] = (int *)malloc(cols * sizeof(int));
     }
 
-    // Set values in the 2D array
+    // Set values in the 2D array based on the row and column indices
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            matrix[i][j] = i * cols + j; // important
+            matrix[i][j] = i * cols + j; // Set values using a formula based on row and column indices
         }
     }
 
@@ -22,7 +22,7 @@ int** createAndSetArray(int rows, int cols) {
 // Function to set value at a specific location in the 2D array
 void setValue(int **matrix, int rows, int cols, int row, int col, int value) {
     if (row >= 0 && row < rows && col >= 0 && col < cols) {
-        matrix[row][col] = value;
+        matrix[row][col] = value; // Set the specified value at the given row and column
     } else {
         printf("Invalid location\n");
     }
@@ -31,7 +31,7 @@ void setValue(int **matrix, int rows, int cols, int row, int col, int value) {
 // Function to retrieve value from a specific location in the 2D array
 int getValue(int **matrix, int rows, int cols, int row, int col) {
     if (row >= 0 && row < rows && col >= 0 && col < cols) {
-        return matrix[row][col];
+        return matrix[row][col]; // Return the value at the specified row and column
     } else {
         printf("Invalid location\n");
         return -1; // Return a default value or handle the error accordingly
@@ -42,7 +42,7 @@ int getValue(int **matrix, int rows, int cols, int row, int col) {
 void printArray(int **matrix, int rows, int cols) {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            printf("%d ", matrix[i][j]);
+            printf("%d ", matrix[i][j]); // Print each element of the array at the specified row and column
         }
         printf("\n");
     }
@@ -51,9 +51,9 @@ void printArray(int **matrix, int rows, int cols) {
 // Function to free memory allocated for the 2D array
 void freeArray(int **matrix, int rows) {
     for (int i = 0; i < rows; i++) {
-        free(matrix[i]);
+        free(matrix[i]); // Free memory for each row
     }
-    free(matrix);
+    free(matrix); // Free the array of row pointers
 }
 
 int main() {

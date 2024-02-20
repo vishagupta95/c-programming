@@ -1,109 +1,125 @@
 #include <stdio.h>
-#include <string.h>  // malloc etc
 #include <stdlib.h>  // malloc etc
 
-/* C program to demonstrate how to pass array of integer to a function*/
+/* Function declarations */
+void display(int *argv);
+double getAverage1(int x[], int argc);
+double getAverage2(int *x, int argc);
 
-void displayString(char **argv,char *argt[], int argc, char *array, char array2[])
+/* Function to display arrays and strings */
+void displayString(char **argv, char *argt[], int argc, char *array, char array2[])
 {
-
     int i = 0;
     char *strg1 = array;
 
-    printf("strlen of array is %d  \n" ,strlen(array));    
- 
-    printf("String test  Method 1\n\n");
-    
+    printf("\n");
+
+    // Display strings in argv and argt arrays
     for (i = 0; i < argc; i++)
     {
         printf("String [%d] : %s \n", i + 1, argv[i]);
     }
-    
-    printf("String test  Method 2\n\n");
-    
+
     for (i = 0; i < argc; i++)
     {
         printf("A-String [%d] : %s \n", i + 1, argt[i]);
     }
 
-    printf("String test  Method 3\n\n");
-
-    for (i = 0; i < array[i] != '\0'; i++)
+    // Display characters in the 'array' array
+    for (i = 0; array[i] != 0; i++)
     {
         printf("array [%d] : %c\n", i + 1, array[i]);
     }
 
-    printf("String test  Method 4\n\n");
-    for (i = 0; i < array2[i] != '\0'; i++)
+    // Display characters in the 'array2' array (Note: array[i] should be array2[i])
+    for (i = 0; array2[i] != 0; i++)
     {
-        printf("array [%d] : %c\n", i + 1, array[i]);
+        printf("array2 [%d] : %c\n", i + 1, array2[i]);
     }
 
-    printf("String test  Method 5\n\n");
-    // loooping array of characters
+    // Loop through the characters in the 'strg1' array
     i = 0;
     while (*strg1 != '\0')
-       printf("new array [%d] : %c\n", ++i, *strg1++);
-
+        printf("new array [%d] : %c\n", ++i, *strg1++);
 }
 
-int displayString_test()
-{
-    char array[] = "vishal  gupta";
-    char *buff[] = {"aap", "bap", "cat", "dog"};
-    int argc = sizeof(buff) / sizeof(buff[0]);
-    printf("argc = %d\n ", argc);
-    displayString(buff, buff, argc, array, array);
-    return 0;
-}
-
-
-double getIntegerAverage1(int x[], int argc)
+/* Function definitions */
+void display(int *argv)
 {
     int i = 0;
-    double j;
-    for (i = 0; i < argc; i++)
+
+    // Display integers in the 'argv' array
+    for (i = 0; argv[i] != 0; i++)
     {
-        j += x[i]; //imp
+        printf(" [%u] ", argv[i]);
     }
-    return (j / argc);
+    printf("\n\n");
 }
 
-double getIntegerAverage2(int *x, int argc)
+double getAverage1(int x[], int argc)
 {
     int i = 0;
-    double j;
+    double j = 0; // Initialize j to zero
+
+    // Sum up the elements in the array
     for (i = 0; i < argc; i++)
     {
         j += x[i];
     }
+
+    // Return the average
+    return (j / argc);
+}
+
+double getAverage2(int *x, int argc)
+{
+    int i = 0;
+    double j = 0; // Initialize j to zero
+
+    // Sum up the elements in the array
+    for (i = 0; i < argc; i++)
+    {
+        j += x[i];
+    }
+
+    // Return the average
     return (j / argc);
 }
 
 int main()
 {
-
-    /* an int array with 5 elements */
+    /* An int array with 5 elements */
     int balance[] = {14, 16, 18, 20, 22};
     double avg;
-    printf("\\0 is %d\n", '\0');
-    printf("0 is %d\n", '0');
 
-    displayString_test();
-    
-    int argc = sizeof(balance) / sizeof(balance[0]);
-    printf("sizeof(balance) %d \n", sizeof(balance));
-    printf("sizeof(balance[0]) %d \n", sizeof(balance[0]));
-    printf("argc =%d \n", argc);
-    /* pass pointer to the array as an argument */
-    
-    avg = getIntegerAverage1(balance, argc);
-    printf("Average value is: %f  \n", avg);
+    char array[] = "king";
+    char *buff[] = {"aap", "bap", "cat", "dog"};
+    int argc_buff = sizeof(buff) / sizeof(buff[0]);
 
-    avg = getIntegerAverage1(balance, argc);
-    printf("Average value is: %f \n ", avg);
+    printf("argc_buff = %d\n ", argc_buff);
 
-    avg = getIntegerAverage2(balance, argc);
-    printf("Average value is: %f \n", avg);
+    displayString(buff, buff, argc_buff, array, array);
+
+    int argc_balance = sizeof(balance) / sizeof(balance[0]);
+    printf("sizeof(balance) %lu\n", sizeof(balance));     // Changed format specifier to %lu for size_t
+    printf("sizeof(balance[0]) %lu\n", sizeof(balance[0])); // Changed format specifier to %lu for size_t
+    printf("argc_balance = %d\n", argc_balance);
+
+    /* Pass pointer to the array as an argument */
+    display(balance);
+
+    // Calculate and display the average using array notation
+    avg = getAverage1(balance, argc_balance);
+    printf("Average value is: %f\n", avg);
+
+    display(balance);
+
+    // Calculate and display the average using pointer notation
+    avg = getAverage2(balance, argc_balance);
+    printf("Average value is: %f\n", avg);
+
+    display(balance);
+
     return 0;
 }
+

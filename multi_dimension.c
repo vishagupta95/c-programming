@@ -1,122 +1,86 @@
 #include <stdio.h>
-
-int main() {
-    // Declare a 3D array with dimensions 2x3x4
-    int myArray[2][3][4] = {
-        {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}},
-        {{13, 14, 15, 16}, {17, 18, 19, 20}, {21, 22, 23, 24}}
-    };
-
-    // Declare a pointer to int
-    int (*ptr)[3][4];
-
-    // Point the pointer to the first 2D array (first "slice") of the 3D array
-    ptr = myArray;
-
-    // Access and print the elements using pointers
-    for (int i = 0; i < 2; ++i) {
-        for (int j = 0; j < 3; ++j) {
-            for (int k = 0; k < 4; ++k) {
-                printf("%d ", *(*(*(ptr + i) + j) + k));
-            }
-            printf("\n");
-        }
-        printf("\n");
-    }
-
-    return 0;
-}
-
-
-int arr[3][4] = { {1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12} };
-int (*ptr)[3][4];  // Declare the pointer
-ptr = &arr;        // Assign the address of arr to ptr
-
-// Accessing elements:
-printf("%d\n", (*ptr)[1][2]);  // Prints 7 (accessing element in row 2, column 3)
-
-
-#include <stdio.h>
 #include <stdlib.h>
 
-// Function to create a generic multidimensional array
-void* createArray(int dimensions, int* sizes) {
-    // Calculate the total size of the array
-    int totalSize = 1;
-    for (int i = 0; i < dimensions; ++i) {
-        totalSize *= sizes[i];
+// Structure to represent a generic multidimensional array
+typedef struct {
+    int dimensions; // Number of dimensions
+    int *sizes;      // Array containing sizes for each dimension
+    void *data;      // Pointer to the data array
+} GenericArray;
+
+// Function to initialize a generic multidimensional array
+GenericArray initArray(int dimensions, int *sizes, size_t elementSize) {
+    GenericArray array;
+    array.dimensions = dimensions;
+
+    // Allocate memory for the sizes array and copy the sizes
+    array.sizes = (int *)malloc(dimensions * sizeof(int));
+    for (int i = 0; i < dimensions; i++) {
+        array.sizes[i] = sizes[i];
     }
 
-    // Allocate memory for the array
-    void* array = malloc(totalSize * sizeof(int));
+    // Calculate total number of elements
+    int totalElements = 1;
+    for (int i = 0; i < dimensions; i++) {
+        totalElements *= sizes[i];
+    }
+
+    // Allocate memory for the data array
+    array.data = malloc(totalElements * elementSize);
 
     return array;
 }
 
-// Function to access elements of the generic multidimensional array
-int getElement(void* array, int dimensions, int* sizes, int* indices) {
-    int index = 0;
+// Function to access an element in a generic multidimensional array
+void *getElement(GenericArray *array, int index1, int index2, size_t elementSize) {
+    // Calculate the linear index
+    int indices[] = {index1, index2};
+    int linearIndex = 0;
     int multiplier = 1;
-
-    // Calculate the index in the 1D array based on the multidimensional indices
-    for (int i = dimensions - 1; i >= 0; --i) {
-        index += indices[i] * multiplier;
-        multiplier *= sizes[i];
+    for (int i = array->dimensions - 1; i >= 0; i--) {
+        linearIndex += indices[i] * multiplier;
+        multiplier *= array->sizes[i];
     }
 
-    // Access and return the element
-    return *((int*)array + index);
+    // Calculate the memory offset and return the pointer to the element
+    size_t offset = linearIndex * elementSize;
+    return (char *)(array->data) + offset;
 }
 
-// Function to set elements of the generic multidimensional array
-void setElement(void* array, int dimensions, int* sizes, int* indices, int value) {
-    int index = 0;
-    int multiplier = 1;
-
-    // Calculate the index in the 1D array based on the multidimensional indices
-    for (int i = dimensions - 1; i >= 0; --i) {
-        index += indices[i] * multiplier;
-        multiplier *= sizes[i];
-    }
-
-    // Set the element
-    *((int*)array + index) = value;
+// Function to free memory allocated for a generic multidimensional array
+void freeArray(GenericArray *array) {
+    free(array->sizes);
+    free(array->data);
 }
 
 int main() {
-    // Define the dimensions and sizes of the array
-    int dimensions = 3;
-    int sizes[] = {2, 3, 4};
+    // Define dimensions and sizes for a 2x3 array
+    int dimensions = 2;
+    int sizes[] = {2, 3};
 
-    // Create a generic multidimensional array
-    void* myArray = createArray(dimensions, sizes);
+    // Initialize a generic array of integers
+    GenericArray intArray = initArray(dimensions, sizes, sizeof(int));
 
-    // Access and set elements of the array
-    for (int i = 0; i < sizes[0]; ++i) {
-        for (int j = 0; j < sizes[1]; ++j) {
-            for (int k = 0; k < sizes[2]; ++k) {
-                int indices[] = {i, j, k};
-                setElement(myArray, dimensions, sizes, indices, i * sizes[1] * sizes[2] + j * sizes[2] + k + 1);
-            }
+    // Assign values to elements
+    for (int i = 0; i < sizes[0]; i++) {
+        for (int j = 0; j < sizes[1]; j++) {
+            int *element = getElement(&intArray, i, j, sizeof(int));
+            *element = i * 10 + j;
         }
     }
 
-    // Print the elements of the array
-    for (int i = 0; i < sizes[0]; ++i) {
-        for (int j = 0; j < sizes[1]; ++j) {
-            for (int k = 0; k < sizes[2]; ++k) {
-                int indices[] = {i, j, k};
-                printf("%d ", getElement(myArray, dimensions, sizes, indices));
-            }
-            printf("\n");
+    // Print the elements
+    for (int i = 0; i < sizes[0]; i++) {
+        for (int j = 0; j < sizes[1]; j++) {
+            int *element = getElement(&intArray, i, j, sizeof(int));
+            printf("%3d ", *element);
         }
         printf("\n");
     }
 
-    // Free the allocated memory
-    free(myArray);
+    // Free the memory
+    freeArray(&intArray);
 
     return 0;
 }
-
 

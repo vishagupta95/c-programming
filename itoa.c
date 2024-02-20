@@ -67,87 +67,68 @@ value of b = 10
 '\0' refers to the null character (ASCII value 0)
 
 */
+#include <stdio.h>
 
-void reverse_str(char *s, int len) {
-    int i, j;
-    char c;
+// Function to reverse a string
+void reverseString(char str[], int length) {
+    int start = 0;
+    int end = length - 1;
 
-    for (i = 0, j = len-1; i < j; ++i, --j) {
-        c = s[i];
-        s[i] = s[j];
-        s[j] = c;
+    while (start < end) {
+        // Swap characters
+        char temp = str[start];
+        str[start] = str[end];
+        str[end] = temp;
+
+        // Move towards the center
+        start++;
+        end--;
     }
 }
 
-char* my_itoa_new(int n, char *s) {
-    int i = 0, sign = n;
-    
-    /* A zero is same "0" string in all base */
-    if (n == 0) {
-        s[i] = '0';
-        s[i + 1] = '\0';
-        return s;
-    }
-
-    while (n != 0) {
-        s[i++] = abs(n % 10) + '0';
-        n = n/10;
-    }
-
-    if (sign < 0)
-        s[i++] = '-';
-
-    s[i] = '\0';
-    reverse_str(s, i);
-    return s;
-}
-
-char* my_itoa(int num, char* str, int base)
-{
+// Function to convert an integer to a string in base 10
+void my_itoa(int num, char str[]) {
     int i = 0;
-    bool isNegative = false;
-  
-    /* A zero is same "0" string in all base */
+    int isNegative = 0;
+
+    // Handle 0 explicitly, otherwise an empty string is returned
     if (num == 0) {
-        str[i] = '0';
-        str[i + 1] = '\0';
-        return str;
+        str[i++] = '0';
+        str[i] = '\0';
+        return;
     }
-  
-    /* negative numbers are only handled if base is 10 
-       otherwise considered unsigned number */
-    if (num < 0 && base == 10) {
-        isNegative = true;
+
+    // Handle negative numbers
+    if (num < 0) {
+        isNegative = 1;
         num = -num;
     }
-  
+
+    // Process individual digits
     while (num != 0) {
-        int rem = num % base;
-        str[i++] = (rem > 9)? (rem-10) + 'A' : rem + '0';
-        num = num/base;
+        int rem = num % 10;
+        str[i++] = rem + '0';
+        num = num / 10;
     }
-  
-    /* Append negative sign for negative numbers */
-    if (isNegative){
+
+    // Append negative sign if the number was negative
+    if (isNegative)
         str[i++] = '-';
-    }
-  
-    str[i] = '\0';
- 
-    reverse_str(str, i);
-  
-    return str;
+
+    str[i] = '\0';  // Null-terminate the string
+
+    // Reverse the string
+    reverseString(str, i);
 }
 
-
- 
 int main() {
-    int i, b;
-    char charArray[128];
-    printf("Enter a number and base\n");
-    scanf("%d %d", &i, &b);
-     
-    printf("String : %s \n", my_itoa_new(i, charArray));
-    printf("String : %s \n", my_itoa(i, charArray, b));
+    int num = -12345;
+    char str[20]; // Assuming a reasonable size for the string buffer
+
+    my_itoa(num, str);
+
+    printf("Integer: %d\nString: %s\n", num, str);
+
     return 0;
 }
+

@@ -3,17 +3,10 @@
 file descriptor is a integer used to index into a table of files that a process has open.
 socket is a special file used for inter-process communication
 
+select, poll, and epoll are system calls used for monitoring multiple file descriptors, with notable differences in scalability, performance, and usage. select has a fixed limit on file descriptors and scans all of them each time it's called, leading to an O(n) time complexity, making it inefficient for large-scale applications. poll improves upon select by allowing a dynamic number of file descriptors but still scans all of them, resulting in the same O(n) complexity. In contrast, epoll uses an event-driven model, where only ready file descriptors are returned, providing an O(k) complexity, where k is the number of ready descriptors. This makes epoll significantly more efficient and scalable, particularly for high-performance applications with many file descriptors. While select and poll are suitable for smaller sets of file descriptors, epoll is preferred for high-concurrency applications like network servers.
 
 There are 3 options you can use in Linux: select, poll,epoll
 
-Select (), poll (), epoll () three sets of I / O multiplexing system calls can listen
-to multiple file descriptors at the same time. They will wait for the timeout 
-specified by the  timeout parameter until an event occurs on one or more 
-file descriptors. 
-
-All the above methods serve the same idea, create a set of file descriptors , tell the
-kernel what would you like to do with each file descriptor (read, write, ..) and use 
-one thread to block on one function call until at least one file descriptor requested 
 operation available
 
 

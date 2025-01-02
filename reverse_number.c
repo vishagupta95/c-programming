@@ -1,51 +1,40 @@
 #include <stdio.h>
 
-int reversDigits(int num)
-{
-    int tmp = 0;
-    //If num is negative, then convert it to positive
-    tmp = (num < 0)? (-1 * num): num;
-    int prev_rev_num = 0, rev_num = 0;
-    while (tmp != 0)
-    {
-        int last_digit = tmp%10;
-        prev_rev_num = (rev_num*10) + last_digit;
-        // checking if the reverse overflowed or not.
-        // The values of (rev_num - last_digit)/10 and
-        // prev_rev_num must be same if there was no
-        // problem.
-        if ((prev_rev_num - last_digit)/10 != rev_num)
-        {
-            printf("WARNING OVERFLOWED!!!\n");
-            return 0;
-        }
-        else
-        {
-            rev_num = prev_rev_num;
-        }
-        tmp = tmp/10;
+int reverse_number(int num) {
+    int reversed = 0;
+    while (num != 0) {
+        int digit = num % 10;        // Extract the last digit
+        reversed = reversed * 10 + digit; // Build the reversed number
+        num /= 10;                  // Remove the last digit from the number
     }
-    return (num < 0)? -rev_num : rev_num;
+    return reversed;
 }
-int main()
-{
-    int number, reversed = 0;
-    //Input a number from user
-    printf("Enter any number = ");
-    scanf("%d", &number);
-    //Reverse the number
-    reversed = reversDigits(number);
-    if(reversed != 0)
-    {
-        printf("Reverse of no. is %d", reversed);
+
+int main() {
+    int num;
+
+    // Input the number
+    printf("Enter a number: ");
+    scanf("%d", &num);
+
+    // Handle negative numbers
+    int is_negative = 0;
+    if (num < 0) {
+        is_negative = 1;
+        num = -num;  // Work with the absolute value of the number
     }
+
+    // Reverse the digits
+    int reversed = reverse_number(num);
+
+    // If the original number was negative, make the reversed number negative
+    if (is_negative) {
+        reversed = -reversed;
+    }
+
+    // Output the reversed number
+    printf("Reversed number: %d\n", reversed);
+
     return 0;
 }
 
-/*
-Enter any number = 12345
-Reverse of no. is 54321
-
-Enter any number = 1000000045
-WARNING OVERFLOWED!!!
-*/

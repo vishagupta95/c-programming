@@ -1,29 +1,6 @@
-#include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
 
-// Helper function to compare two words using the mapping
-int compare(char *word1, char *word2, int mapping[]) {
-    while (*word1 != '\0' && *word2 != '\0') {
-        if (mapping[*word1 - 'a'] < mapping[*word2 - 'a']) {
-            return -1;
-        } else if (mapping[*word1 - 'a'] > mapping[*word2 - 'a']) {
-            return 1;
-        }
-        word1++;
-        word2++;
-    }
-
-    if (*word1 == '\0' && *word2 != '\0') {
-        return -1;
-    } else if (*word1 != '\0' && *word2 == '\0') {
-        return 1;
-    }
-
-    return 0;
-}
-
-// Function to check if words are sorted in alien language
 bool isAlienSorted(char **words, int wordsSize, char *order) {
     int mapping[26]; // Mapping of the alien alphabet to English alphabet
 
@@ -32,27 +9,49 @@ bool isAlienSorted(char **words, int wordsSize, char *order) {
         mapping[order[i] - 'a'] = i;
     }
 
-    // Check if words are sorted
+    // Function to compare two words based on the alien alphabet
+    int compareWords(char *word1, char *word2) {
+        int len1 = strlen(word1);
+        int len2 = strlen(word2);
+        int minLen = len1 < len2 ? len1 : len2;
+
+        for (int i = 0; i < minLen; i++) {
+            int char1 = mapping[word1[i] - 'a'];
+            int char2 = mapping[word2[i] - 'a'];
+            if (char1 < char2) {
+                return -1;  // word1 is smaller than word2
+            } else if (char1 > char2) {
+                return 1;  // word1 is greater than word2
+            }
+        }
+
+        // If all characters are equal till the length of the shorter word, 
+        // the shorter word should come first.
+        if (len1 < len2) {
+            return -1;
+        } else if (len1 > len2) {
+            return 1;
+        }
+        return 0;  // words are equal
+    }
+
+    // Compare each consecutive pair of words
     for (int i = 0; i < wordsSize - 1; i++) {
-        if (compare(words[i], words[i + 1], mapping) > 0) {
-            return false;
+        if (compareWords(words[i], words[i + 1]) > 0) {
+            return false;  // words[i] is greater than words[i + 1]
         }
     }
 
-    return true;
+    return true;  // All words are in sorted order
 }
+#include <stdio.h>
 
 int main() {
-    char *words[] = {"hello", "leetcode"};
+    char *words[] = {"apple", "app"};
     int wordsSize = 2;
-    char order[] = "hlabcdefgijkmnopqrstuvwxyz";
-
-    if (isAlienSorted(words, wordsSize, order)) {
-        printf("The words are sorted in the alien language.\n");
-    } else {
-        printf("The words are not sorted in the alien language.\n");
-    }
-
+    char *order = "abcdefghijklmnopqrstuvwxyz";
+    bool result = isAlienSorted(words, wordsSize, order);
+    printf("Is sorted: %s\n", result ? "True" : "False");
     return 0;
 }
 

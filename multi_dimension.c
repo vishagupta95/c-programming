@@ -8,6 +8,17 @@ typedef struct {
     void *data;      // Pointer to the data array
 } GenericArray;
 
+/*
+// Function to update an element of the 2D array using pointers
+void updateElementPointer(int** array, int rows, int cols, int row, int col, int value) {
+    if (row >= 0 && row < rows && col >= 0 && col < cols) {
+        *(*(array + row) + col) = value; // Update the element using pointer arithmetic
+    } else {
+        printf("Invalid indices\n");
+    }
+}
+*/
+
 // Function to initialize a generic multidimensional array
 GenericArray initArray(int dimensions, int *sizes, size_t elementSize) {
     GenericArray array;
@@ -47,7 +58,7 @@ void *getElement(GenericArray *array, int index1, int index2, size_t elementSize
     return (char *)(array->data) + offset;
 }
 
-// Function to free memory allocated for a generic multidimensional array
+ Function to free memory allocated for a generic multidimensional array
 void freeArray(GenericArray *array) {
     free(array->sizes);
     free(array->data);

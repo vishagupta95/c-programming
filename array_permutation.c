@@ -51,6 +51,7 @@ int main() {
     return 0;
 }
 
+#if 0
 /* Driver program to test above functions */
 int main()
 {
@@ -59,5 +60,6 @@ int main()
 	permute(str, 0, n-1);
 	return 0;
 }
+#endif
 
 

@@ -47,38 +47,3 @@ int main() {
 
     return 0;
 }
-#if 0
-
-#include <iostream>
-#include <string>
-#include <algorithm>
-
-using namespace std;
-
-bool are_anagrams(string str1, string str2) {
-    // If the lengths of the two strings are different, they cannot be anagrams
-    if (str1.length() != str2.length()) {
-        return false;
-    }
-
-    // Sort both strings
-    sort(str1.begin(), str1.end());
-    sort(str2.begin(), str2.end());
-
-    // Compare the sorted strings
-    return str1 == str2;
-}
-
-int main() {
-    string str1 = "listen";
-    string str2 = "silent";
-
-    if (are_anagrams(str1, str2)) {
-        cout << "'" << str1 << "' and '" << str2 << "' are anagrams." << endl;
-    } else {
-        cout << "'" << str1 << "' and '" << str2 << "' are not anagrams." << endl;
-    }
-
-    return 0;
-}
-#endif

@@ -1,16 +1,46 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/*
+
+In a 2D array, the main array holds pointers to each row. This is why we declare array as int**, because it points 
+to an array of row pointers. This is important because the 2D array is essentially an array of arrays.
+When you initialize each row (array[i] = malloc(cols * sizeof(int));), you allocate memory for that row.
+Pointers to Rows: Each row pointer (array[i]) points to a contiguous block of memory where the row elements are stored.
+Address of Rows: The addresses of each row (&array[i]) may not be contiguous, as the rows are allocated separately.
+Address of Elements: The addresses of elements within a row (&array[i][j]) are contiguous, as they are part of a single dynamically allocated block.
+
+n = rows × cols, which represents the total number of elements in the 2D array.
+The nested loops iterate over each element exactly once, resulting in O(n) iterations.
+spae comlexity 0(1)
+
+*/
 #include <stdio.h>
 #include <stdlib.h>
 
-// Function to initialize a 2D array with default values
+// Function to initialize a 2D array dynamically
 int** initialize2DArray(int rows, int cols, int defaultValue) {
-    int** array = (int**)malloc(rows * sizeof(int*)); // Allocate memory for row pointers
+    int** array = malloc(rows * sizeof(int*));  // Allocate memory for rows
+    if (array == NULL) {  // Check if malloc failed for rows allocation
+        printf("Memory allocation failed for rows.\n");
+        return NULL;
+    }
+
     for (int i = 0; i < rows; i++) {
-        array[i] = (int*)malloc(cols * sizeof(int)); // Allocate memory for each row
+        array[i] = malloc(cols * sizeof(int));  // Allocate memory for each row
+        if (array[i] == NULL) {  // Check if malloc failed for individual row
+            printf("Memory allocation failed for row %d.\n", i);
+            // Free already allocated rows and return NULL
+            for (int j = 0; j < i; j++) {
+                free(array[j]);
+            }
+            free(array);
+            return NULL;
+        }
+        
+        // Initialize with the default value using pointer arithmetic
         for (int j = 0; j < cols; j++) {
-            array[i][j] = defaultValue; // Initialize elements with the default value
+            *(*(array + i) + j) = defaultValue;
         }
     }
     return array;
@@ -19,9 +49,9 @@ int** initialize2DArray(int rows, int cols, int defaultValue) {
 // Function to update an element of the 2D array using pointers
 void updateElementPointer(int** array, int rows, int cols, int row, int col, int value) {
     if (row >= 0 && row < rows && col >= 0 && col < cols) {
-        *(*(array + row) + col) = value; // Update the element using pointer arithmetic
+        *(*(array + row) + col) = value;  // Update using pointer arithmetic
     } else {
-        printf("Invalid indices\n");
+        printf("Invalid indices: row=%d, col=%d\n", row, col);  // Error handling
     }
 }
 
@@ -29,114 +59,41 @@ void updateElementPointer(int** array, int rows, int cols, int row, int col, int
 void print2DArray(int** array, int rows, int cols) {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            printf("%d ", *(*(array + i) + j)); // Access the element using pointer arithmetic
+            printf("%d ", *(*(array + i) + j));  // Access using pointer arithmetic
         }
         printf("\n");
     }
 }
 
-// Function to free the memory allocated for the 2D array
+// Function to deallocate the 2D array
 void free2DArray(int** array, int rows) {
     for (int i = 0; i < rows; i++) {
-        free(array[i]); // Free memory for each row
+        free(array[i]);  // Free each row
     }
-    free(array); // Free memory for the row pointers
+    free(array);  // Free the array of pointers
 }
 
 int main() {
-    int rows = 3, cols = 3, defaultValue = 0;
-
-    // Initialize the 2D array
+    int rows = 3, cols = 4;
+    int defaultValue = 0;
+    
+    // Initialize a 2D array with default value
     int** array = initialize2DArray(rows, cols, defaultValue);
+    
+    // Check if memory allocation was successful
+    if (array == NULL) {
+        return 1;  // Return non-zero value indicating failure
+    }
 
-    printf("Initial Array:\n");
+    // Update an element using pointer arithmetic
+    updateElementPointer(array, rows, cols, 1, 2, 100);  // Set element at (1, 2) to 100
+    
+    // Print the updated array using pointer arithmetic
     print2DArray(array, rows, cols);
-
-    // Update elements in the array
-    updateElementPointer(array, rows, cols, 1, 1, 42);
-    updateElementPointer(array, rows, cols, 2, 2, 99);
-
-    printf("\nUpdated Array:\n");
-    print2DArray(array, rows, cols);
-
+    
     // Free the allocated memory
     free2DArray(array, rows);
-
+    
     return 0;
 }
 
-#if 0
-// Function to allocate memory for a 2D array and return a pointer to it
-int** create2DArray(int rows, int cols) {
-    int **array = (int **)malloc(rows * sizeof(int *));
-    if (array == NULL) {
-        printf("Memory allocation failed\n");
-        return NULL;
-    }
-    for (int i = 0; i < rows; i++) {
-        array[i] = (int *)malloc(cols * sizeof(int));
-        if (array[i] == NULL) {
-            printf("Memory allocation failed\n");
-            for (int j = 0; j < i; j++) {
-                free(array[j]);
-            }
-            free(array);
-            return NULL;
-        }
-    }
-    return array;
-}
-
-// Function to update the value at a specific location in the 2D array using pointers
-void updateElement(int** array, int rows, int cols, int row, int col, int value) {
-    if (row >= 0 && row < rows && col >= 0 && col < cols) {
-        array[row][col] = value;
-    } else {
-        printf("Invalid indices\n");
-    }
-}
-
-// Function to display the 2D array using pointers
-void displayArray(int** array, int rows, int cols) {
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            printf("%d ", array[i][j]);
-        }
-        printf("\n");
-    }
-}
-
-// Function to free the memory allocated for the 2D array
-void free2DArray(int** array, int rows) {
-    for (int i = 0; i < rows; i++) {
-        free(array[i]);
-    }
-    free(array);
-}
-
-int main() {
-    int rows, cols;
-
-    // Input the number of rows and columns
-    printf("Enter the number of rows: ");
-    scanf("%d", &rows);
-    printf("Enter the number of columns: ");
-    scanf("%d", &cols);
-
-    // Allocate memory for the 2D array
-    int** array = create2DArray(rows, cols);
-    if (array == NULL) {
-        return 1;
-    }
-
-    // Example usage
-    int value = 5;
-    updateElement(array, rows, cols, 1, 1, value);
-    displayArray(array, rows, cols);
-
-    // Free the allocated memory
-    free2DArray(array, rows);
-
-    return 0;
-}
-#endif

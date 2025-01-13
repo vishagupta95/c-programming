@@ -1,65 +1,63 @@
-/*
- * Algorithm Paradigm: Backtracking 
-
-Time Complexity: O(n*n!) Note that there are n! permutations and it requires O(n) time to print a permutation.
- you can use recursion. Here's a C program to achieve this:
-
-c
-
-
-Auxiliary Space: O(r – l)
-*/
 #include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+/*
+Time complexity:
+The time complexity of the algorithm is O(n! * n) because it generates all n! permutations of the string, and at each recursive level, 
+it performs a duplicate check that takes O(n) time.
 
-// Function to swap two elements in an array
-void swap(int *a, int *b) {
-    int temp = *a;
+Space complexity:
+The space complexity is O(n) due to the recursive call stack, as the recursion depth can go up to n levels (the length of the string). 
+The algorithm does not use additional significant space apart from the input string.
+*/
+
+// Function to swap two characters
+void swap(char *a, char *b) {
+    char temp = *a;
     *a = *b;
     *b = temp;
 }
 
-// Function to print all permutations of an array
-void printPermutations(int arr[], int start, int end) {
-    if (start == end) {
-        // Base case: When we reach the end of the array, print the permutation
-        for (int i = 0; i <= end; i++) {
-            printf("%d ", arr[i]);
+// Function to check if swapping str[start] with str[current] is valid
+bool shouldSwap(char str[], int start, int current) {
+    for (int i = start; i < current; i++) {
+        if (str[i] == str[current]) {
+            return false; // Duplicate found, no need to swap
         }
-        printf("\n");
+    }
+    return true;
+}
+
+// Function to print all unique permutations of a string
+void printPermutations(char str[], int start, int end) {
+    if (start == end) {
+        // Base case: When we reach the end of the string, print the permutation
+        printf("%s\n", str);
     } else {
-        // Recursive case: Generate permutations by swapping elements
+        // Recursive case: Generate permutations by swapping characters
         for (int i = start; i <= end; i++) {
-            // Swap the current element with itself and all subsequent elements
-            swap(&arr[start], &arr[i]);
-            
-            // Recursively generate permutations for the remaining elements
-            printPermutations(arr, start + 1, end);
-            
-            // Restore the array to its original state (backtrack)
-            swap(&arr[start], &arr[i]);
+            // Check if swapping str[start] with str[i] is valid
+            if (shouldSwap(str, start, i)) {
+                // Swap the current character with itself and all subsequent characters
+                swap(&str[start], &str[i]);
+                
+                // Recursively generate permutations for the remaining characters
+                printPermutations(str, start + 1, end);
+                
+                // Restore the string to its original state (backtrack)
+                swap(&str[start], &str[i]);
+            }
         }
     }
 }
 
 int main() {
-    int arr[] = {1, 2, 2};
-    int n = sizeof(arr) / sizeof(arr[0]);
+    char str[] = "ABCD";
+    int n = strlen(str);
 
-    printf("All permutations of the array:\n");
-    printPermutations(arr, 0, n - 1);
+    printf("All unique permutations of the string:\n");
+    printPermutations(str, 0, n - 1);
 
     return 0;
 }
-
-#if 0
-/* Driver program to test above functions */
-int main()
-{
-	char str[] = "ABC";
-	int n = strlen(str);
-	permute(str, 0, n-1);
-	return 0;
-}
-#endif
-
 

@@ -2,29 +2,48 @@
 #include <stdlib.h>
 
 /*
+// Define stack node for `int`
 typedef struct intStackNode {
-    int data;
-    struct intStackNode* next;
+    int data;                         // Node data is of type `int`
+    struct intStackNode* next;        // Pointer to the next node
 } intStackNode;
 
+// Define stack structure for `int`
 typedef struct {
-    intStackNode* top;
+    intStackNode* top;                // Pointer to the top of the stack
 } intStack;
 
+// Initialize stack
 void initintStack(intStack* stack) {
-    stack->top = NULL;
+    stack->top = NULL;                // Set the top pointer to NULL
 }
 
+// Push value onto the stack
 void pushintStack(intStack* stack, int value) {
-    intStackNode* newNode = (intStackNode*)malloc(sizeof(intStackNode));
+    intStackNode* newNode = (intStackNode*)malloc(sizeof(intStackNode));  // Allocate memory
     if (newNode == NULL) {
         fprintf(stderr, "Memory allocation failed\n");
         exit(EXIT_FAILURE);
     }
-    newNode->data = value;
-    newNode->next = stack->top;
-    stack->top = newNode;
+    newNode->data = value;           // Set the data of the new node
+    newNode->next = stack->top;      // Link the new node to the current top
+    stack->top = newNode;            // Update the top pointer
 }
+
+// Pop value from the stack
+int popintStack(intStack* stack) {
+    if (stack->top != NULL) {
+        intStackNode* temp = stack->top;  // Store the top node
+        stack->top = temp->next;         // Update the top pointer
+        int data = temp->data;           // Extract the data
+        free(temp);                      // Free the memory
+        return data;                     // Return the data
+    } else {
+        fprintf(stderr, "Stack underflow\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
 */
 
 #define DECLARE_STACK_TYPE(type)                       \

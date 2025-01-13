@@ -5,39 +5,50 @@
 // Function to search for contacts based on a partial phone number
 char *solution(char *A[], char *B[], int N, char *P)
 {
-    // Allocate memory dynamically for the result array
-    char *dest = malloc(1024);
+    // Handle edge cases
+    if (N <= 0 || P == NULL || strlen(P) == 0) {
+        char *dest = malloc(11); // Enough for "NO CONTACT\0"
+        if (dest == NULL) {
+            fprintf(stderr, "Memory allocation failed\n");
+            exit(EXIT_FAILURE);
+        }
+        strcpy(dest, "NO CONTACT");
+        return dest;
+    }
+
+    // Calculate memory needed
+    size_t total_size = 1; // For null terminator
+    for (int i = 0; i < N; i++) {
+        if (strstr(B[i], P)) {
+            total_size += strlen(A[i]) + 1; // Name + space
+        }
+    }
+
+    // Allocate memory
+    char *dest = malloc(total_size);
     if (dest == NULL) {
         fprintf(stderr, "Memory allocation failed\n");
         exit(EXIT_FAILURE);
     }
+    dest[0] = '\0'; // Initialize empty string
 
-    // Initialize the array with zeros
-    memset(dest, 0, 1024);
-
-    // Flag to check if there is any matching contact
+    // Iterate through contacts
     int no_match = 1;
-
-    // Iterate through the contacts
-    for (int i = 0; i < N; i++)
-    {
-        // Check if the partial phone number is found in the current contact
-        if (strstr(B[i], P))
-        {
-            // Concatenate the contact name to the result array
+    for (int i = 0; i < N; i++) {
+        if (strstr(B[i], P)) {
             strcat(dest, A[i]);
             strcat(dest, " ");
             no_match = 0;
         }
     }
 
-    // If no matching contact is found, set the result to "NO CONTACT"
-    if (no_match == 1)
-    {
+    // Handle no match case
+    if (no_match) {
         strcpy(dest, "NO CONTACT");
+    } else {
+        dest[strlen(dest) - 1] = '\0'; // Remove trailing space
     }
 
-    // Return the dynamically allocated result array
     return dest;
 }
 
@@ -45,24 +56,19 @@ int main()
 {
     // Arrays of contact names and phone numbers
     char *name[] = {"visha", "vishal", "vishal gupta", "vishalgupta95"};
-    char *name2[] = {"rishi", "vishal", "vishal gupta", "vishalgupta957"};
     char *phone[] = {"9886983955", "9886983950", "9886983951", "9886983952"};
 
-    // Calculate the size of the arrays
     int size = sizeof(name) / sizeof(name[0]);
-
-    // Print the size of the arrays
     printf("size = %d\n", size);
 
-    // Search for contacts with a partial phone number and print the result
+    // Search for contacts
     char *result1 = solution(name, phone, size, "9886");
-    printf("%s \n", result1);
-    
-    char *result2 = solution(name2, phone, size, "9886");
-    printf("%s \n", result2);
-
-    // Free the dynamically allocated memory
+    printf("%s\n", result1);
     free(result1);
+
+    // Example with no match
+    char *result2 = solution(name, phone, size, "1234");
+    printf("%s\n", result2);
     free(result2);
 
     return 0;

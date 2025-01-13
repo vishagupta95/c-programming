@@ -2,12 +2,13 @@
 #include <stdbool.h>
 #include <string.h>
 /*
- The program generates all unique permutations of a string using a 
-  backtracking algorithm.
-  Total Permutations: For a string of length n, there are 
-  n! permutations.
-  Duplicate Handling: The shouldSwap function adds additional checks. 
- O(n×n!).
+Time complexity:
+The time complexity of the algorithm is O(n! * n) because it generates all n! permutations of the string, and at each recursive level, 
+it performs a duplicate check that takes O(n) time.
+
+Space complexity:
+The space complexity is O(n) due to the recursive call stack, as the recursion depth can go up to n levels (the length of the string). 
+The algorithm does not use additional significant space apart from the input string.
 */
 
 // Function to swap two characters

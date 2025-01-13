@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <string.h>
+#include <limits.h>
+#include <float.h>
 
 // Macro to calculate the size of a variable or type using pointer arithmetic
 #define my_sizeof(type) (char *)(&type + 1) - (char *)(&type)
@@ -20,6 +22,20 @@ void demo_macros() {
 
     int a = 5, b = 10;
     printf("Max of %d and %d is %d\n", a, b, MAX(a, b));  // Maximum of `a` and `b`
+}
+
+int limit() {
+    printf("INT_MAX: %d\n", INT_MAX);
+    printf("INT_MIN: %d\n", INT_MIN);
+    printf("LONG_MAX: %ld\n", LONG_MAX);
+    printf("LONG_MIN: %ld\n", LONG_MIN);
+    
+    printf("FLT_MAX: %f\n", FLT_MAX);
+    printf("FLT_MIN: %e\n", FLT_MIN);
+    printf("DBL_MAX: %lf\n", DBL_MAX);
+    printf("DBL_MIN: %e\n", DBL_MIN);
+    
+    return 0;
 }
 
 // Function to test the conditional ternary operator
@@ -99,7 +115,7 @@ int main() {
     enum_test();                 // Test enums
     demo_factorial();            // Test factorial calculation
     size_test();                 // Test size-related operations
-
+    limit();
     return 0; // Successful execution
 }
 

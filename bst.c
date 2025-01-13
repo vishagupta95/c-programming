@@ -177,7 +177,33 @@ int tnode_count(Node *node) {
     return 1 + tnode_count(node->left) + tnode_count(node->right);
 }
 
+// Function to calculate the maximum of two numbers
+int max(int a, int b) {
+    return (a >= b) ? a : b;
+}
 
+// a time complexity of diamater is O(n)2 recursson  
+// because the height function is called repeatedly.
+// Function to calculate the diameter of the tree
+int diameter(Node* node) {
+    if (node == NULL) {
+        return 0;
+    }
+
+    // Height of left and right subtrees
+    int lheight = height(node->left);
+    int rheight = height(node->right);
+
+    // Diameter of left and right subtrees
+    int ldiameter = diameter(node->left);
+    int rdiameter = diameter(node->right);
+
+    // Return the maximum of:
+    // 1. Diameter through the current node
+    // 2. Left diameter
+    // 3. Right diameter
+    return max(lheight + rheight + 1, max(ldiameter, rdiameter));
+}
 
 
 // Driver program to test the functions
@@ -198,7 +224,8 @@ int main() {
     levelOrder(root);
 
     printf("\nHeight of the binary tree: %d\n", height(root));
-
+    printf("Diameter of the tree: %d\n", diameter(root));
+ 
     if (isBST(root, INT_MIN, INT_MAX)) {
         printf("This binary tree is a BST.\n");
     } else {

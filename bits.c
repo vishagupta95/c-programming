@@ -193,11 +193,19 @@ int main2() {
 
 // C function that sets the bits between positions i and j in N to the bits of M:
 void setBitsInRange(int *N, int M, int i, int j) {
+
     // Create a mask to clear bits between i and j in N
-    int mask = ((1 << (j - i + 1)) - 1) << i;
-    
-    // Clear the bits in N between i and j and set the bits from M
-    *N = (*N & ~mask) | ((M << i) & mask);
+    int allOnes = ~0;  // All bits are set to 1
+    int left = allOnes << (j + 1);  // 1s before position j, 0s after position j
+    int right = (1 << i) - 1;  // 1s after position i, 0s before position i
+    int mask = left | right;  // Combine left and right to create the mask
+
+    // Clear the bits in N between i and j by applying the mask
+    *N &= mask;
+
+    // Align M with the cleared bits and set them in N
+    M <<= i;  // Shift M so that it aligns with the position i
+    *N |= M;  // Set the bits in N with the bits of M
 }
 
 int main3() {

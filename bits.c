@@ -10,6 +10,18 @@ For each bit pair (A, B), the XOR result (A ^ B) follows these rules:
 0 ^ 1 = 1 (Bits are different, result is 1)
 1 ^ 0 = 1 (Bits are different, result is 1)
 1 ^ 1 = 0 (Both bits are the same, result is 0)
+
+(1 << 2) - 1:
+
+The result of 1 << 2 is 4 (00000100 in binary).
+Subtracting 1 gives: 4 - 1 = 3.
+Binary representation of 3: 00000011
+
+1 << 0: 0000000000000001
+Before: 1000000000000000
+After: 1000000000000001
+Hex: 0x8001
+
 */
 
 #define BIT_SET(n, p) (n |= (1 << p))

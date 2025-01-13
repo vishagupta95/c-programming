@@ -2,6 +2,16 @@
 #include <stdlib.h>
 
 
+/* XOR
+XOR Operation Rules:
+For each bit pair (A, B), the XOR result (A ^ B) follows these rules:
+
+0 ^ 0 = 0 (Both bits are the same, result is 0)
+0 ^ 1 = 1 (Bits are different, result is 1)
+1 ^ 0 = 1 (Bits are different, result is 1)
+1 ^ 1 = 0 (Both bits are the same, result is 0)
+*/
+
 #define BIT_SET(n, p) (n |= (1 << p))
 #define BIT_CLR(n, p) (n &= ~(1 << p))
 #define BIT_RESET(n, p) (n ^= (1 << p))
@@ -126,6 +136,87 @@ void set_bit_count_from_void(void *input)
 }
 
 
+// Function to count the number of 1s in the binary representation of a number
+int countSetBits(unsigned int n) {
+    int count = 0;
+    while (n) {
+        count += n & 1;  // Increment count if the last bit is 1
+        n >>= 1;          // Right shift n to check the next bit
+    }
+    return count;
+}
+
+// Function to find the number of bits required to convert a to b
+int bitsRequiredToConvert(unsigned int a, unsigned int b) {
+    // XOR a and b to get the positions where bits differ
+    unsigned int xor = a ^ b;
+    
+    // Count the number of 1s in the XOR result (bits that are different)
+    return countSetBits(xor);
+}
+
+int main1() {
+    unsigned int a = 29;  // Example integer a (binary: 11101)
+    unsigned int b = 15;  // Example integer b (binary: 01111)
+
+    printf("Number of bits required to convert %u to %u: %d\n", a, b, bitsRequiredToConvert(a, b));
+
+    return 0;
+}
+
+
+//C Code to Swap Odd and Even Bits:
+unsigned int swapOddEvenBits(unsigned int n) {
+    // Mask for even bits (0x55555555): binary pattern 01010101010101010101010101010101
+    unsigned int evenBits = n & 0xAAAAAAAA; // Mask for odd bits (binary pattern 10101010101010101010101010101010)
+    unsigned int oddBits = n & 0x55555555;
+
+    // Right shift the even bits and left shift the odd bits
+    evenBits >>= 1;
+    oddBits <<= 1;
+
+    // Combine the even and odd bits
+    return (evenBits | oddBits);
+}
+
+int main2() {
+    unsigned int n = 23;  // Example number, binary: 10111
+
+    printf("Before swapping bits: %u (binary: %b)\n", n, n);
+    
+    n = swapOddEvenBits(n);
+
+    printf("After swapping odd and even bits: %u (binary: %b)\n", n, n);
+
+    return 0;
+}
+
+// C function that sets the bits between positions i and j in N to the bits of M:
+void setBitsInRange(int *N, int M, int i, int j) {
+    // Create a mask to clear bits between i and j in N
+    int mask = ((1 << (j - i + 1)) - 1) << i;
+    
+    // Clear the bits in N between i and j and set the bits from M
+    *N = (*N & ~mask) | ((M << i) & mask);
+}
+
+int main3() {
+    int N = 1024;  // Example value for N
+    int M = 19;    // Example value for M
+    int i = 2;     // Start bit position
+    int j = 6;     // End bit position
+
+    printf("Before setting bits:\nN = %d\n", N);
+    
+    // Set bits between i and j in N to M
+    setBitsInRange(&N, M, i, j);
+
+    printf("After setting bits between position %d and %d in N to M:\nN = %d\n", i, j, N);
+
+    return 0;
+}
+
+
 int main()
 {
     // Example inputs to test the function
@@ -170,6 +261,9 @@ int main()
     print_binary(num);
     print_binary(mod_result);
 
+    main1();
+    main2();
+    main3();
     return 0;
 }
 

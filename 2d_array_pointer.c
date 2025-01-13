@@ -3,20 +3,14 @@
 
 /*
 
-In a 2D array, the main array holds pointers to each row. This is why we declare array as int**, because it points 
-to an array of row pointers. This is important because the 2D array is essentially an array of arrays.
-When you initialize each row (array[i] = malloc(cols * sizeof(int));), you allocate memory for that row.
-Pointers to Rows: Each row pointer (array[i]) points to a contiguous block of memory where the row elements are stored.
+In a 2D array, the main array holds pointers to each row. This is why we declare array as int**
+2D array is essentially an array of arrays.
 Address of Rows: The addresses of each row (&array[i]) may not be contiguous, as the rows are allocated separately.
-Address of Elements: The addresses of elements within a row (&array[i][j]) are contiguous, as they are part of a single dynamically allocated block.
-
 n = rows × cols, which represents the total number of elements in the 2D array.
 The nested loops iterate over each element exactly once, resulting in O(n) iterations.
 spae comlexity 0(1)
 
 */
-#include <stdio.h>
-#include <stdlib.h>
 
 // Function to initialize a 2D array dynamically
 int** initialize2DArray(int rows, int cols, int defaultValue) {

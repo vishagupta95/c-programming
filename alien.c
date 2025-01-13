@@ -1,5 +1,12 @@
+#include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+
+/* in stdbool
+#define bool _Bool
+#define true 1
+#define false 0
+*/
 
 bool isAlienSorted(char **words, int wordsSize, char *order) {
     int mapping[26]; // Mapping of the alien alphabet to English alphabet
@@ -44,7 +51,6 @@ bool isAlienSorted(char **words, int wordsSize, char *order) {
 
     return true;  // All words are in sorted order
 }
-#include <stdio.h>
 
 int main() {
     char *words[] = {"apple", "app"};

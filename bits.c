@@ -236,6 +236,32 @@ int main3() {
     return 0;
 }
 
+int addWithoutPlus(int a, int b) {
+    while (b != 0) {
+        int carry = a & b;   // Find carry
+        a = a ^ b;           // Perform addition without carry
+        b = carry << 1;      // Shift carry left
+    }
+    return a;
+}
+
+int subtract(int a, int b) {
+    // Use two's complement to calculate subtraction
+    while (b != 0) {
+        // Borrow contains common set bits of `a` and `~b`
+        int borrow = (~a) & b;
+
+        // Subtraction without borrow
+        a = a ^ b;
+
+        // Calculate the new borrow
+        b = borrow << 1;
+    }
+    return a;
+}
+
+
+
 
 int main()
 {
@@ -284,6 +310,10 @@ int main()
     main1();
     main2();
     main3();
+     
+    num1 = 5; num2 = 3;
+    printf("Sum of %d and %d is: %d\n", num1, num2, addWithoutPlus(num1, num2));
+    printf("Subtraction of %d - %d is %d\n", 10 , 8, subtract(10, 8));
     return 0;
 }
 

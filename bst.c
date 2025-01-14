@@ -4,12 +4,18 @@
 #include <limits.h>
 #include <stdbool.h>
 
-typedef struct node {
-    int data;
-    struct node *left, *right;
-} Node;
-
 /*
+
+For balanced binary trees:
+
+The height (h) is approximately O(log n), where n is the number of nodes.
+Operations like insertion, deletion, and search are more efficient due to the logarithmic height, typically requiring O(log n) time.
+For skewed binary trees:
+
+The height (h) can approach n (the total number of nodes).
+This results in linear time complexity (O(n)) for operations that depend on the tree's height, 
+as the tree essentially behaves like a linked list in the worst-case scenario.
+
 Time Complexity for Important Binary Tree Functions:
 1. Height of Binary Tree: O(n), where n is the number of nodes.
 2. Level Order Traversal: O(n), where n is the number of nodes.
@@ -31,12 +37,28 @@ Node with two children: Replace the node with its in-order successor, then delet
 In-order Traversal: Used to verify the correctness of the BST after deletio
 */
 
+typedef struct node {
+    int data;
+    struct node *left, *right;
+} Node;
+
+
 // Function to create a new node
 Node *newNode(int item) {
     Node *temp = (Node *)malloc(sizeof(Node));
     temp->data = item;
     temp->left = temp->right = NULL;
     return temp;
+}
+
+// Function to free the memory allocated for the tree
+void freeTree(Node* root) {
+    if (root == NULL)
+        return;
+    
+    freeTree(root->left);
+    freeTree(root->right);
+    free(root);
 }
 
 // Function to calculate the height of the binary tree
@@ -75,6 +97,19 @@ void levelOrder(Node *root) {
 
     free(queue);
     printf("\n");
+}
+
+// Function to print nodes at a specific level
+void printLevel_OLD(Node* root, int level) {
+    if (root == NULL) {
+        return;
+    }
+    if (level == 1) {
+        printf("%d ", root->data);
+    } else if (level > 1) {
+        printLevel_OLD(root->left, level - 1);
+        printLevel_OLD(root->right, level - 1);
+    }
 }
 
 // Function to perform in-order traversal
@@ -170,12 +205,6 @@ void mirror_tree(Node *root) {
     root->right = temp;
 }
 
-// Function to count total nodes in the binary tree
-int tnode_count(Node *node) {
-    if (node == NULL)
-        return 0;
-    return 1 + tnode_count(node->left) + tnode_count(node->right);
-}
 
 // Function to calculate the maximum of two numbers
 int max(int a, int b) {
@@ -205,10 +234,79 @@ int diameter(Node* node) {
     return max(lheight + rheight + 1, max(ldiameter, rdiameter));
 }
 
+void print_preorder(Node * tree)
+{
+    if (tree)
+    {
+        printf("%d\n",tree->data);
+        print_preorder(tree->left);
+        print_preorder(tree->right);
+    }
+
+}
+
+void print_inorderx(Node * tree)
+{
+    if (tree)
+    {
+        print_inorderx(tree->left);
+        printf("%d\n",tree->data);
+        print_inorderx(tree->right);
+    }
+}
+
+/* returns the total number of tree nodes */
+int tnode_count(Node *p)
+{   
+    if (p == NULL) 
+        return 0;
+    else    
+    {
+        if (p->left == NULL && p->right == NULL)
+            return 1;
+        else
+            return (1 + (tnode_count(p->left) + tnode_count(p->right)));
+    }
+}   
+
+void print_postorder(Node * tree)
+{
+    if (tree)
+    {
+        print_postorder(tree->left);
+        print_postorder(tree->right);
+        printf("%d\n",tree->data);
+    }
+}
+
+//insert 2d
+void insertOther(Node ** tree, int val)
+{
+    Node *temp = NULL;
+    if(!(*tree))
+    {
+        temp = (Node *)malloc(sizeof(Node));
+        temp->left = temp->right = NULL;
+        temp->data = val;
+        *tree = temp;
+        return;
+    }
+
+    if(val < (*tree)->data)
+    {
+        insertOther(&(*tree)->left, val);
+    }
+    else if(val > (*tree)->data)
+    {
+        insertOther(&(*tree)->right, val);
+    }
+
+}
 
 // Driver program to test the functions
 int main() {
     Node *root = NULL;
+    Node *root1 = NULL;
     root = insert(root, 50);
     insert(root, 30);
     insert(root, 20);
@@ -216,6 +314,14 @@ int main() {
     insert(root, 70);
     insert(root, 60);
     insert(root, 80);
+
+    insertOther(&root1, 9);
+    insertOther(&root1, 10);
+    insertOther(&root1, 15);
+    insertOther(&root1, 6);
+    insertOther(&root1, 12);
+    insertOther(&root1, 17);
+    insertOther(&root1, 2);
 
     printf("In-order traversal:\n");
     inOrder(root);
@@ -250,6 +356,7 @@ int main() {
     inOrder(root);
     printf("\n");
 
+ 
     return 0;
 }
 

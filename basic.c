@@ -2,6 +2,76 @@
 #include <string.h>
 #include <limits.h>
 #include <float.h>
+#include <stdlib.h>
+
+int** initialize2DArray(int rows, int cols, int defaultValue) {
+    int** array = malloc(rows * sizeof(int*));  // Allocate memory for rows
+    int i =0;
+    if (array == NULL) {  // Check if malloc failed for rows allocation
+        printf("Memory allocation failed for rows.\n");
+        return NULL;
+    }
+      // Initialize with the default value using pointer arithmetic
+        for (int j = 0; j < cols; j++) {
+            *(*(array + i) + j) = defaultValue;
+   }
+
+}
+
+double getAverage1(int x[], int argc) {
+  int i = 0;
+  double j = 0; // Initialize j to zero
+
+  // Sum up the elements in the array
+  for (i = 0; i < argc; i++) {
+    j += x[i];
+  }
+
+  // Return the average
+  return (j / argc);
+}
+
+typedef struct A
+{
+  int x;
+  char y[50];
+ }NODE;
+
+
+int mains()
+{
+
+ NODE var1 = { 40,"vishal"};
+ NODE var2 = { .x = 40, .y = "vishal"};
+
+ printf("%d %s \n",var1.x,var1.y);
+ printf("%d %s \n",var2.x,var2.y);
+}
+
+struct person
+{
+   int age;
+   float weight;
+};
+
+int abc()
+{
+    struct person *personPtr, person1;
+    personPtr = &person1;
+
+    printf("Enter age: ");
+    scanf("%d", &personPtr->age);
+
+    printf("Enter weight: ");
+    scanf("%f", &personPtr->weight);
+
+    printf("Displaying:\n");
+    printf("Age: %d\n", personPtr->age);
+    printf("weight: %f", personPtr->weight);
+
+    return 0;
+
+}
 
 // Macro to calculate the size of a variable or type using pointer arithmetic
 #define my_sizeof(type) (char *)(&type + 1) - (char *)(&type)
